@@ -22,7 +22,17 @@ export default function Products() {
   const [f, setF] = useState(EMPTY_FORM);
 
   const openAdd = () => { setEditing(null); setF(EMPTY_FORM); setOpen(true); };
-  const openEdit = (product) => { setEditing(product); setF({ ...product, buy: String(product.buy), sell: String(product.sell), qty: String(product.qty), min: String(product.min) }); setOpen(true); };
+  const openEdit = (product) => {
+    setEditing(product);
+    setF({
+      ...product,
+      buy: String(product.buy ?? ""),
+      sell: String(product.sell ?? ""),
+      qty: String(product.qty ?? ""),
+      min: String(product.min ?? 5),
+    });
+    setOpen(true);
+  };
   const closeModal = () => { setOpen(false); setEditing(null); setF(EMPTY_FORM); };
 
   const submit = async (e) => {
@@ -47,9 +57,17 @@ export default function Products() {
     closeModal();
   };
 
+  const removeProduct = async (product) => {
+    if (!window.confirm(`هل أنت متأكد من حذف المنتج "${product.name}"؟ لا يمكن التراجع!`)) return;
+    const result = await deleteSingleItem("products", product.id);
+    if (result !== null) {
+      setList((current) => current.filter((x) => x.id !== product.id));
+    }
+  };
+
   const low = list.filter((p) => p.qty <= p.min);
-  const lowValue = low.reduce((s, p) => s + p.buy * p.qty, 0);
-  const stockValue = list.reduce((s, p) => s + p.buy * p.qty, 0);
+  const lowValue = low.reduce((s, p) => s + (p.buy || 0) * (p.qty || 0), 0);
+  const stockValue = list.reduce((s, p) => s + (p.buy || 0) * (p.qty || 0), 0);
 
   const cards = [
     { label: "عدد المنتجات", value: list.length, icon: "fa-boxes-stacked", c: "bg-purple-100 text-purple-600" },
@@ -97,10 +115,7 @@ export default function Products() {
                   <td className="td">
                     <div className="flex gap-1">
                       <button onClick={() => openEdit(p)} className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-pen" /></button>
-                      <button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={async () => {
-                        const result = await deleteSingleItem("products", p.id);
-                        if (result !== null) setList((current) => current.filter((x) => x.id !== p.id));
-                      }}><i className="fa-solid fa-trash" /></button>
+                      <button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => removeProduct(p)}><i className="fa-solid fa-trash" /></button>
                     </div>
                   </td>
                 </tr>
@@ -119,7 +134,8 @@ export default function Products() {
               <Field label="التصنيف">
                 <Select value={f.cat} onChange={(e) => setF({ ...f, cat: e.target.value })}>
                   <option value="lenses">عدسات</option><option value="frames">إطارات</option>
-                  <option value="medical_glasses">نظارات طبية</option><option value="accessories">إكسسوارات</option><option value="other">أخرى</option>
+                  <option value="medical_glasses">نظارات طبية</option><option value="accessories">إكسسوارات</option>
+                  <option value="other">أخرى</option>
                 </Select>
               </Field>
             </div>
