@@ -97,7 +97,8 @@ export function ensureClinicBaseline() {
   writeStorage(STORAGE_KEYS.settings, { ...DEFAULT_CLINIC_SETTINGS, ...settings });
 
   window.localStorage.removeItem("clinic-notifications-v1");
-  writeStorage(STORAGE_KEYS.auth, false);
+  // ✅ تم حذف السطر التالي (كان يمسح تسجيل الدخول عند كل تحميل)
+  // writeStorage(STORAGE_KEYS.auth, false);
 }
 
 export function resetStorage() {
@@ -111,7 +112,9 @@ export function resetStorage() {
   writeStorage(STORAGE_KEYS.users, [DEFAULT_ADMIN_USER]);
   writeStorage(STORAGE_KEYS.examiners, [DEFAULT_EXAMINER]);
   writeStorage(STORAGE_KEYS.settings, DEFAULT_CLINIC_SETTINGS);
+  // ✅ هنا يبقى موجود (هذي دالة إعادة تعيين كاملة)
   writeStorage(STORAGE_KEYS.auth, false);
+
   collectionKeys().forEach((key) => writeStorage(STORAGE_KEYS[key], []));
 }
 
