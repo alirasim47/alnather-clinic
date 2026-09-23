@@ -41,6 +41,20 @@ export default function Examiners() {
     close();
   };
 
+  const toggleActive = async (item, v) => {
+    const payload = { ...item, active: v };
+    const result = await saveSingleItem("examiners", payload);
+    if (result) {
+      setList((current) => current.map((i) => (i.id === item.id ? payload : i)));
+    }
+  };
+
+  const removeExaminer = async (item) => {
+    if (!window.confirm(`هل أنت متأكد من حذف الفاحص "${item.name}"؟ لا يمكن التراجع!`)) return;
+    const result = await deleteSingleItem("examiners", item.id);
+    if (result !== null) setList((current) => current.filter((i) => i.id !== item.id));
+  };
+
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
@@ -63,17 +77,14 @@ export default function Examiners() {
                   <td className="td"><Badge color="blue">{x.role}</Badge></td>
                   <td className="td">
                     <div className="flex items-center gap-2">
-                      <Toggle on={x.active} onChange={(v) => setList((current) => current.map((i) => i.id === x.id ? { ...i, active: v } : i))} />
+                      <Toggle on={x.active} onChange={(v) => toggleActive(x, v)} />
                       <span className={`text-xs font-bold ${x.active ? "text-success" : "text-gray-400"}`}>{x.active ? "نشط" : "موقوف"}</span>
                     </div>
                   </td>
                   <td className="td">
                     <div className="flex gap-1">
                       <button onClick={() => openEdit(x)} className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-pen" /></button>
-                      <button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={async () => {
-                        const result = await deleteSingleItem("examiners", x.id);
-                        if (result !== null) setList((current) => current.filter((i) => i.id !== x.id));
-                      }}>
+                      <button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => removeExaminer(x)}>
                         <i className="fa-solid fa-trash" />
                       </button>
                     </div>
