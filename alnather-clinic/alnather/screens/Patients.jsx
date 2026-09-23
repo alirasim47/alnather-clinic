@@ -9,17 +9,23 @@ import ExamForm from "@/components/ExamForm";
 export default function Patients() {
   const [patients, setPatients] = useState(seedPatients);
   const [exams, setExams] = useState(seedExams);
+  const [examiners, setExaminers] = useState(seedExaminers);
+  const [settings, setSettings] = useState({});
 
   useEffect(() => {
     let ignore = false;
     const load = async () => {
-      const [loadedPatients, loadedExams] = await Promise.all([
+      const [loadedPatients, loadedExams, loadedExaminers, loadedSettings] = await Promise.all([
         fetchCollection("patients", seedPatients),
         fetchCollection("exams", seedExams),
+        fetchCollection("examiners", seedExaminers),
+        fetchCollection("settings", {}),
       ]);
       if (!ignore) {
         setPatients(loadedPatients);
         setExams(loadedExams);
+        setExaminers(Array.isArray(loadedExaminers) ? loadedExaminers : seedExaminers);
+        setSettings(loadedSettings && typeof loadedSettings === "object" ? loadedSettings : {});
       }
     };
     load();
@@ -62,18 +68,20 @@ export default function Patients() {
   };
 
   const removePatient = async (id) => {
-    if (confirm("هل أنت متأكد من حذف هذا المريض؟ سيتم حذف جميع فحوصاته.")) {
+    if (window.confirm("هل أنت متأكد من حذف هذا المريض؟ سيتم حذف جميع فحوصاته.")) {
       const result = await deleteSingleItem("patients", id);
       if (result !== null) {
         setPatients((current) => current.filter((p) => p.id !== id));
-      setExams((current) => current.filter((exam) => exam.patientId !== id));
-      if (fileOf === id) setFileOf(null);
+        setExams((current) => current.filter((exam) => exam.patientId !== id));
+        if (fileOf === id) setFileOf(null);
+      }
     }
-  }
   };
 
   const detailPatient = fileOf ? patients.find((p) => p.id === fileOf) : null;
   const detailExams = detailPatient ? exams.filter((e) => e.patientId === detailPatient.id) : [];
+  const clinicName = settings.clinicName || "عيادة العلي";
+  const clinicPhone = settings.phone1 || "";
 
   const detailView = detailPatient ? (
     <div className="space-y-6">
@@ -126,7 +134,7 @@ export default function Patients() {
                 <tr key={e.id} className="hover:bg-accent-soft/40">
                   <td className="td font-bold">{fmtDate(e.date)}</td>
                   <td className="td">{e.lensType || e.lens || "—"}</td>
-                  <td className="td">{seedExaminers.find((x) => x.id === e.examinerId)?.name || "—"}</td>
+                  <td className="td">{examiners.find((x) => x.id === e.examinerId)?.name || "—"}</td>
                   <td className="td font-bold text-success">{fmtMoney(e.price)}</td>
                   <td className="td">{e.reviewDate ? fmtDate(e.reviewDate) : "—"}</td>
                   <td className="td">
@@ -134,19 +142,20 @@ export default function Patients() {
                       <button title="طباعة الوصفة" className="icon-btn text-primary hover:bg-primary hover:text-white"
                         onClick={() => printPrescription({
                           patient: detailPatient,
-                          exam: { date: fmtDate(e.date), examiner: seedExaminers.find((x) => x.id === e.examinerId)?.name, pd: e.pd, vaOD: e.vaOD, vaOS: e.vaOS, lens: e.lensType || e.lens, refraction: e.refraction, notes: e.notes },
+                          exam: { date: fmtDate(e.date), examiner: examiners.find((x) => x.id === e.examinerId)?.name, pd: e.pd, vaOD: e.vaOD, vaOS: e.vaOS, lens: e.lensType || e.lens, refraction: e.refraction, notes: e.notes },
                           rx: e.rx || { distance: { OD: {}, OS: {} }, near: { OD: {}, OS: {} } },
-                          clinic: { name: "عيادة العلي", phone: "0112345678" },
+                          clinic: { name: clinicName, phone: clinicPhone },
                         })}>
                         <i className="fa-solid fa-print" />
                       </button>
                       <button title="إرسال واتساب" className="icon-btn text-success hover:bg-success hover:text-white"
-                        onClick={() => openWhatsApp({ phone: detailPatient.phone1, name: detailPatient.name, date: e.reviewDate || todayISO(), time: "10:00", clinic: "عيادة العلي" })}>
+                        onClick={() => openWhatsApp({ phone: detailPatient.phone1, name: detailPatient.name, date: e.reviewDate || todayISO(), time: "10:00", clinic: clinicName })}>
                         <i className="fa-brands fa-whatsapp" />
                       </button>
                       <button title="تعديل" className="icon-btn text-info hover:bg-info hover:text-white" onClick={() => setEditingExam(e)}><i className="fa-solid fa-pen" /></button>
                       <button title="حذف" className="icon-btn text-danger hover:bg-danger hover:text-white"
                         onClick={async () => {
+                          if (!window.confirm("هل أنت متأكد من حذف هذا الفحص؟ لا يمكن التراجع!")) return;
                           const result = await deleteSingleItem("exams", e.id);
                           if (result !== null) {
                             setExams((current) => current.filter((x) => x.id !== e.id));
@@ -288,7 +297,7 @@ function PatientFormModal({ patient = null, onClose, onSave, title }) {
         </Field>
         <div className="grid grid-cols-2 gap-4">
           <Field label="رقم الجوال 1"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone1} onChange={set("phone1")} /></Field>
-          <Field label="رقم الجوال 2"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone2} onChange={set("phone2")} /></Field>
+          <Field label="رقم الجوال 2"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone2} onChange={set("phone2") /></Field>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Field label="الجنس">
