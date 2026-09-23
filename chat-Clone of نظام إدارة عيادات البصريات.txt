@@ -1,0 +1,2191 @@
+### USER
+**Role:** Act as a Senior Full-Stack Developer and Expert UI/UX Designer.
+
+**Task:** I need you to build a comprehensive, production-ready web application for an "Optometry and Eye Clinic Management System" (نظام إدارة عيادات فحص النظر والبصريات). The system must strictly follow a Right-To-Left (RTL) Arabic layout. 
+
+**1. Global Design System & UI/UX Guidelines:**
+* **Direction:** Strict RTL (Right-to-Left) layout for all pages, menus, and text.
+* **Color Palette:**
+    * **Primary Sidebar/Login Background:** Dark Purple (approx. `#2c1b3d`).
+    * **Primary Accent/Action Buttons:** Mustard Yellow (approx. `#eab308`), with black text inside for high contrast.
+    * **Main Background:** Light Gray/Off-White (`#f3f4f6`) for the main content area to make white cards pop.
+    * **Card Backgrounds:** Pure White (`#ffffff`) with subtle drop shadows (`shadow-md`).
+    * **Success/Income:** Green (approx. `#10b981`).
+    * **Alert/Warning:** Red/Orange (approx. `#ef4444`).
+* **Typography:** Modern Arabic font (e.g., 'Tajawal' or 'Cairo' from Google Fonts).
+* **Component Style:** Slightly rounded corners (border-radius: 8px to 12px) for cards, modals, and input fields. Material Design or flat modern icons (like FontAwesome or Heroicons) used extensively next to text.
+* **Layout Structure:**
+    * **Fixed Right Sidebar:** Contains navigation links with icons. Active state has a yellow background with dark text.
+    * **Top Navbar:** Contains Admin profile picture, role ("مدير النظام"), current date, notification bell (with red dot), and a logout icon.
+    * **Main Content Area:** Takes up the remaining left space.
+
+**2. Detailed Page-by-Page Specifications:**
+
+**A. Splash/Login Screen:**
+* **Background:** Solid Dark Purple.
+* **Center Card:** White card, slightly rounded.
+* **Header:** Clinic Logo (Yellow eye icon) + Title "الناظر" (Al-Nather) + Subtitle "لإدارة عيادات فحص النظر والبصريات".
+* **Inputs:** * Username input with a user icon on the right.
+    * Password input with a lock icon on the right.
+* **Extras:** Checkbox "تذكرني على هذا الجهاز" (Remember me).
+* **Button:** Full-width Yellow button "تسجيل الدخول" (Login).
+* **Footer:** Faded text showing system version and date.
+
+**B. Dashboard (الرئيسية):**
+* **Title:** "لوحة التحكم" (Control Panel) - overview of today's activities.
+* **Top 4 Statistic Cards:**
+    * Card 1: "فحوصات اليوم" (Today's Exams) - Number + Purple document icon.
+    * Card 2: "تنبيهات نقص المخزون" (Low Stock Alerts) - Number + Blue box icon.
+    * Card 3: "مبيعات اليوم" (Today's Sales) - Number + Teal cart icon.
+    * Card 4: "إجمالي دخل اليوم" (Total Daily Income) - Amount + Green money icon.
+* **Bottom Section (Split into two tables side-by-side):**
+    * **Table 1 (Right): "آخر الفحوصات" (Latest Exams).** Columns: Patient Name, Examiner, Date, Price, Invoice Number.
+    * **Table 2 (Left): "آخر الفواتير" (Latest Invoices).** Columns: Patient Name, Total, Remaining, Payment Status.
+
+**C. Patients Management (المرضى):**
+* **Top Bar:** Title, Total count of patients, a Search bar (Search by name or phone), and a Yellow button "+ إضافة مريض" (Add Patient).
+* **Main Table:** Columns: Name, Phone, File Number, Last Visit, Actions (Edit icon, Delete icon, View File icon).
+* **Add Patient Modal:**
+    * Fields: Full Name (required), Phone 1, Phone 2, Gender (Radio buttons: Male/Female), Date of Birth (Date picker), Address, Notes. Bottom buttons: Cancel (Red outline), Save (Yellow).
+* **Patient Profile / Exam History View:**
+    * Shows patient info at the top. Button to add "+ فحص جديد" (New Exam).
+    * Table of previous exams showing Date, Lens Type, Examiner, Price, Review Date, and action icons (Print, WhatsApp, Edit, Delete).
+* **Eye Exam Form (CRITICAL DETAIL):**
+    * Divided into two main sections: **DISTANCE** and **NEAR**.
+    * Inside each, two rows for eyes: **OD (Right Eye)** and **OS (Left Eye)**.
+    * Input fields for each eye: **SPH, CYL, AXIS.**
+    * Shared fields: **PD (Pupillary Distance).**
+    * Below grids: **VISUAL ACUITY (VA OD, VA OS)** and **REFRACTION RESULT**.
+    * Dropdowns: Examiner, Lens Type.
+    * General Info: Exam Date, Notes, Exam Price.
+
+**D. Follow-up Notifications (تنبيهات المراجعات):**
+* **Top Metric Cards:** Today's Reviews, Reviews this week, Reviews this month, Overdue.
+* **Table:** Date, Time, Patient Name, Phone, Status (Pending/Done), Notes, Actions (Send WhatsApp icon, Mark as Done icon).
+* **WhatsApp Modal:** Clicking the WhatsApp icon opens a modal to select the time/date of the appointment to automatically generate and send a WhatsApp message.
+
+**E. Examiners/Staff (الفاحصون):**
+* **Table:** Examiner Name, Phone, Role (e.g., Optometrist), Active Status (Toggle Switch), Actions (Edit/Delete).
+* Button to "+ إضافة فاحص" (Add Examiner).
+
+**F. Invoices & Sales (الفواتير والمبيعات):**
+* **Filters:** Date Range, Search bar, Payment Status Dropdown (All, Cash, Installments), Payment Method.
+* **Table:** Invoice Number, Date, Patient, Total, Paid, Remaining, Payment Method, Actions.
+* **Create Invoice/POS view:** Select products/services, input quantity, calculate total, add discounts, input paid amount, calculate remaining amount.
+
+**G. Products & Inventory (المنتجات):**
+* **Top Cards:** Number of products, Value of low stock, Total stock value.
+* **Table:** Product Name, Category (Lenses, Frames, Medical Glasses), Purchase Price, Selling Price, Quantity, Low Stock Limit, Actions.
+* **Add Product Modal:** Name, Barcode, Category dropdown, Purchase Price, Selling Price, Quantity, Minimum Limit warning, Notes.
+
+**H. Reports (التقارير):**
+* Date pickers (From Date - To Date).
+* Export Action Buttons: "طباعة" (Print - Gray), "PDF" (Blue), "Excel" (Green).
+* Displays aggregated data tables based on the selected date range.
+
+**I. Users & Permissions (المستخدمون):**
+* **Table:** Full Name, Username, Role (Admin, Accountant), Active Status toggle, Actions.
+
+**J. Settings (الإعدادات):**
+* **Tabs:** Clinic Settings, WhatsApp Templates, Backup, Updates.
+* **Clinic Settings Tab:** Clinic Name, Phone Numbers, Footer Text, Color Picker to change system primary color, Logo Upload, QR Code generator display.
+
+**3. Technical Requirements for the AI:**
+* Provide the database schema (SQL or NoSQL) to support all the above entities (Users, Patients, Exams, Invoices, Products).
+* Provide the UI code (using React/Next.js with Tailwind CSS). Ensure RTL layout (`dir="rtl"`) is implemented globally.
+* Include the complex state management needed for the 'Eye Exam Form' grid (OD/OS, SPH, CYL, AXIS).
+* Simulate the Print to PDF and WhatsApp API integration logic.
+
+Please generate the code step-by-step, starting with the database schema, then the main layout wrapper (Sidebar + Navbar), and finally the individual complex components like the Dashboard and the Eye Exam Form.
+
+
+### ASSISTANT
+I'll build this step-by-step as a production-ready **Next.js (App Router) + Tailwind CSS** system with a full **PostgreSQL** schema. Every screen follows your design tokens: dark-purple sidebar, mustard-yellow actions, RTL Tajawal typography, and white elevated cards.
+
+---
+
+## Part 1 — Database Schema (PostgreSQL)
+
+```sql
+-- ============================================================
+-- نظام إدارة عيادات فحص النظر والبصريات — "الناظر"
+-- Optometry & Eye Clinic Management System — Schema
+-- ============================================================
+
+CREATE TYPE user_role       AS ENUM ('admin','accountant','receptionist','examiner');
+CREATE TYPE gender          AS ENUM ('male','female');
+CREATE TYPE rx_section      AS ENUM ('distance','near');   -- بُعد / قريب
+CREATE TYPE eye_side        AS ENUM ('OD','OS');           -- يمنى / يسرى
+CREATE TYPE pay_method      AS ENUM ('cash','card','installments','transfer');
+CREATE TYPE pay_status      AS ENUM ('paid','partial','unpaid');
+CREATE TYPE followup_status AS ENUM ('pending','done','overdue');
+CREATE TYPE product_cat     AS ENUM ('lenses','frames','medical_glasses','accessories','other');
+
+-- ------------------------------------------------------------
+-- المستخدمون والصلاحيات
+-- ------------------------------------------------------------
+CREATE TABLE users (
+    id            BIGSERIAL PRIMARY KEY,
+    full_name     TEXT        NOT NULL,
+    username      TEXT        NOT NULL UNIQUE,
+    password_hash TEXT        NOT NULL,
+    role          user_role   NOT NULL DEFAULT 'receptionist',
+    avatar_url    TEXT,
+    is_active     BOOLEAN     NOT NULL DEFAULT TRUE,
+    created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- ------------------------------------------------------------
+-- الفاحصون / الكادر الطبي
+-- ------------------------------------------------------------
+CREATE TABLE examiners (
+    id         BIGSERIAL PRIMARY KEY,
+    name       TEXT    NOT NULL,
+    phone      TEXT,
+    job_title  TEXT    NOT NULL DEFAULT 'أخصائي بصريات',
+    is_active  BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- ------------------------------------------------------------
+-- المرضى
+-- ------------------------------------------------------------
+CREATE TABLE patients (
+    id          BIGSERIAL PRIMARY KEY,
+    file_number TEXT    NOT NULL UNIQUE,          -- رقم الملف
+    full_name   TEXT    NOT NULL,
+    phone1      TEXT,
+    phone2      TEXT,
+    gender      gender  NOT NULL DEFAULT 'male',
+    birth_date  DATE,
+    address     TEXT,
+    notes       TEXT,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_patients_name  ON patients (full_name);
+CREATE INDEX idx_patients_phone ON patients (phone1);
+
+-- ------------------------------------------------------------
+-- فحوصات النظر (الرئيسية)
+-- ------------------------------------------------------------
+CREATE TABLE exams (
+    id            BIGSERIAL PRIMARY KEY,
+    patient_id    BIGINT  NOT NULL REFERENCES patients(id)  ON DELETE CASCADE,
+    examiner_id   BIGINT  REFERENCES examiners(id)          ON DELETE SET NULL,
+    exam_date     DATE    NOT NULL DEFAULT CURRENT_DATE,
+    price         NUMERIC(12,2) NOT NULL DEFAULT 0,
+    pd            NUMERIC(5,1),                    -- المسافة بين البؤبؤين
+    va_od         TEXT,                            -- حدة الإبصار - اليمنى
+    va_os         TEXT,                            -- حدة الإبصار - اليسرى
+    refraction    TEXT,                            -- نتيجة الانكسار
+    lens_type     TEXT,                            -- نوع العدسة
+    review_date   DATE,                            -- موعد المراجعة
+    notes         TEXT,
+    created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_exams_patient ON exams (patient_id, exam_date DESC);
+
+-- ------------------------------------------------------------
+-- وصفة الفحص — شبكة OD/OS × SPH/CYL/AXIS للبعد والقريب
+-- ------------------------------------------------------------
+CREATE TABLE prescriptions (
+    id       BIGSERIAL PRIMARY KEY,
+    exam_id  BIGINT     NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
+    section  rx_section NOT NULL,
+    eye      eye_side   NOT NULL,
+    sph      NUMERIC(6,2),
+    cyl      NUMERIC(6,2),
+    axis     INTEGER CHECK (axis BETWEEN 0 AND 180),
+    UNIQUE (exam_id, section, eye)
+);
+
+-- ------------------------------------------------------------
+-- المنتجات والمخزون
+-- ------------------------------------------------------------
+CREATE TABLE products (
+    id             BIGSERIAL PRIMARY KEY,
+    name           TEXT        NOT NULL,
+    barcode        TEXT UNIQUE,
+    category       product_cat NOT NULL DEFAULT 'other',
+    purchase_price NUMERIC(12,2) NOT NULL DEFAULT 0,
+    selling_price  NUMERIC(12,2) NOT NULL DEFAULT 0,
+    quantity       INTEGER       NOT NULL DEFAULT 0,
+    min_stock      INTEGER       NOT NULL DEFAULT 5,
+    notes          TEXT,
+    created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_products_low ON products (quantity) WHERE quantity <= min_stock;
+
+-- ------------------------------------------------------------
+-- الفواتير والمبيعات
+-- ------------------------------------------------------------
+CREATE TABLE invoices (
+    id             BIGSERIAL PRIMARY KEY,
+    invoice_no     TEXT        NOT NULL UNIQUE,
+    patient_id     BIGINT      REFERENCES patients(id) ON DELETE SET NULL,
+    exam_id        BIGINT      REFERENCES exams(id)    ON DELETE SET NULL,
+    issue_date     DATE        NOT NULL DEFAULT CURRENT_DATE,
+    subtotal       NUMERIC(12,2) NOT NULL DEFAULT 0,
+    discount       NUMERIC(12,2) NOT NULL DEFAULT 0,
+    total          NUMERIC(12,2) NOT NULL DEFAULT 0,
+    paid           NUMERIC(12,2) NOT NULL DEFAULT 0,
+    remaining      NUMERIC(12,2) GENERATED ALWAYS AS (total - paid) STORED,
+    payment_method pay_method  NOT NULL DEFAULT 'cash',
+    payment_status pay_status  NOT NULL DEFAULT 'unpaid',
+    created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE invoice_items (
+    id          BIGSERIAL PRIMARY KEY,
+    invoice_id  BIGINT NOT NULL REFERENCES invoices(id) ON DELETE CASCADE,
+    product_id  BIGINT REFERENCES products(id) ON DELETE SET NULL,
+    description TEXT   NOT NULL,               -- اسم الخدمة/المنتج وقت البيع
+    quantity    INTEGER NOT NULL DEFAULT 1,
+    unit_price  NUMERIC(12,2) NOT NULL DEFAULT 0,
+    subtotal    NUMERIC(12,2) GENERATED ALWAYS AS (quantity * unit_price) STORED
+);
+
+-- ------------------------------------------------------------
+-- تنبيهات المراجعات والمتابعة
+-- ------------------------------------------------------------
+CREATE TABLE followups (
+    id         BIGSERIAL PRIMARY KEY,
+    patient_id BIGINT NOT NULL REFERENCES patients(id) ON DELETE CASCADE,
+    exam_id    BIGINT REFERENCES exams(id) ON DELETE SET NULL,
+    due_date   DATE   NOT NULL,
+    due_time   TIME,
+    status     followup_status NOT NULL DEFAULT 'pending',
+    notes      TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_followups_due ON followups (due_date, status);
+
+-- ------------------------------------------------------------
+-- قوالب واتساب وإعدادات العيادة
+-- ------------------------------------------------------------
+CREATE TABLE whatsapp_templates (
+    id   BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL,            -- مثال: تذكير مراجعة
+    body TEXT NOT NULL             -- يدعم {name},{date},{time},{clinic}
+);
+
+CREATE TABLE clinic_settings (
+    id           SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+    clinic_name  TEXT NOT NULL DEFAULT 'الناظر',
+    phone1       TEXT,
+    phone2       TEXT,
+    footer_text  TEXT,
+    primary_color TEXT NOT NULL DEFAULT '#2c1b3d',
+    logo_url     TEXT,
+    wa_country_code TEXT NOT NULL DEFAULT '966'
+);
+
+-- تحديث تلقائي لـ updated_at
+CREATE OR REPLACE FUNCTION touch_updated_at() RETURNS trigger AS $$
+BEGIN NEW.updated_at = now(); RETURN NEW; END; $$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_patients_touch BEFORE UPDATE ON patients FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
+CREATE TRIGGER trg_users_touch    BEFORE UPDATE ON users    FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
+```
+
+---
+
+## Part 2 — Project Setup
+
+### `package.json` (dependencies)
+
+```json
+{
+  "name": "alnather-clinic",
+  "version": "1.0.0",
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "dependencies": {
+    "next": "14.2.0",
+    "react": "18.3.0",
+    "react-dom": "18.3.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.0",
+    "postcss": "8.4.0",
+    "autoprefixer": "10.4.0"
+  }
+}
+```
+
+### `tailwind.config.js`
+
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./app/**/*.{js,jsx}", "./components/**/*.{js,jsx}"],
+  theme: {
+    extend: {
+      colors: {
+        primary: { DEFAULT: "#2c1b3d", 600: "#3a2552", 700: "#241534", 800: "#1c1029" },
+        accent:  { DEFAULT: "#eab308", hover: "#ca9a06", soft: "#fef9c3" },
+        surface: "#f3f4f6",
+        success: "#10b981",
+        danger:  "#ef4444",
+        info:    "#3b82f6",
+        teal:    "#14b8a6",
+      },
+      fontFamily: { tajawal: ["Tajawal", "sans-serif"] },
+      boxShadow: {
+        card: "0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05)",
+        pop:  "0 20px 45px -12px rgb(44 27 61 / 0.35)",
+      },
+      borderRadius: { xl2: "12px" },
+    },
+  },
+  plugins: [],
+};
+```
+
+### `postcss.config.js`
+
+```js
+module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };
+```
+
+### `app/globals.css`
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+
+html, body { height: 100%; }
+body {
+  @apply bg-surface font-tajawal text-gray-800 antialiased;
+  direction: rtl;
+}
+
+/* ---------- إعادة استخدام الأنماط ---------- */
+@layer components {
+  .card        { @apply bg-white rounded-xl2 shadow-card border border-gray-100; }
+  .input       { @apply w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm
+                        focus:outline-none focus:ring-2 focus:ring-accent/60 focus:border-accent
+                        placeholder:text-gray-400 transition; }
+  .btn         { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5
+                        text-sm font-bold transition select-none disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-accent  { @apply btn bg-accent text-black hover:bg-accent-hover shadow-sm; }
+  .btn-outline-danger { @apply btn border border-danger text-danger hover:bg-danger hover:text-white; }
+  .btn-ghost   { @apply btn border border-gray-300 text-gray-600 hover:bg-gray-100; }
+  .btn-blue    { @apply btn bg-info text-white hover:bg-blue-600; }
+  .btn-green   { @apply btn bg-success text-white hover:bg-emerald-600; }
+  .th          { @apply px-4 py-3 text-right text-xs font-bold text-gray-500 whitespace-nowrap; }
+  .td          { @apply px-4 py-3 text-sm text-gray-700 whitespace-nowrap; }
+  .icon-btn    { @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-sm
+                        transition hover:bg-gray-100; }
+  .chip        { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold; }
+  .field-label { @apply mb-1.5 block text-sm font-bold text-gray-700; }
+}
+
+/* ---------- شريط تمرير أنيق ---------- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-gray-400; }
+```
+
+### `app/layout.jsx` — Global RTL wrapper
+
+```jsx
+import "./globals.css";
+
+export const metadata = {
+  title: "الناظر — نظام إدارة عيادات فحص النظر والبصريات",
+  description: "نظام متكامل لإدارة عيادات البصريات وفحص النظر",
+};
+
+export default function RootLayout({ children }) {
+  return (
+    // RTL مُفعّل عالميًا من هنا
+    <html lang="ar" dir="rtl">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+---
+
+## Part 3 — Shared Utilities (WhatsApp + PDF Print)
+
+### `lib/utils.js`
+
+```js
+// ============================================================
+// أدوات مساعدة: العملة، التاريخ، واتساب، الطباعة/PDF
+// ============================================================
+
+export const fmtMoney = (n) =>
+  new Intl.NumberFormat("ar", { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+    .format(Number(n) || 0) + " ر.س";
+
+export const fmtDate = (d) =>
+  new Date(d).toLocaleDateString("ar-EG", { year: "numeric", month: "short", day: "numeric" });
+
+export const todayISO = () => new Date().toISOString().slice(0, 10);
+
+export const longDate = () =>
+  new Date().toLocaleDateString("ar-EG", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+  });
+
+// ------------------------------------------------------------
+// تكامل واتساب (محاكاة) — يبني رابط wa.me ويفتحه
+// في الإنتاج: استبدلها بنداء خلفية Twilio/WhatsApp Cloud API
+// ------------------------------------------------------------
+export function buildWhatsApp({ phone, name, date, time, clinic = "الناظر", countryCode = "966" }) {
+  const clean = String(phone || "").replace(/\D/g, "");
+  const full = clean.startsWith("0") ? countryCode + clean.slice(1) : clean;
+
+  const template =
+    `مرحباً ${name} 👋\n` +
+    `نودّ تذكيركم بموعد المراجعة في عيادة *${clinic}* لفحص النظر.\n` +
+    `🗓️ التاريخ: ${date}\n⏰ الوقت: ${time}\n` +
+    `نسعد بخدمتكم، وفي حال وجود أي استفسار يرجى التواصل معنا.`;
+
+  return `https://wa.me/${full}?text=${encodeURIComponent(template)}`;
+}
+
+export const openWhatsApp = (payload) => window.open(buildWhatsApp(payload), "_blank");
+
+// ------------------------------------------------------------
+// الطباعة / تصدير PDF — يفتح نافذة طباعة منسّقة لوصفة النظر
+// في الإنتاج يمكن استبدالها بـ @react-pdf/renderer أو puppeteer
+// ------------------------------------------------------------
+export function printPrescription({ patient, exam, rx, clinic }) {
+  const row = (label, od, os) => `
+    <tr>
+      <td class="lbl">${label}</td>
+      <td>${od.SPH || "—"}</td><td>${od.CYL || "—"}</td><td>${od.AXIS || "—"}</td>
+      <td>${os.SPH || "—"}</td><td>${os.CYL || "—"}</td><td>${os.AXIS || "—"}</td>
+    </tr>`;
+
+  const html = `<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8">
+  <title>وصفة نظر — ${patient.name}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;font-family:Tajawal,sans-serif}
+    body{margin:24px;color:#1f2937}
+    .head{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #2c1b3d;padding-bottom:12px}
+    .logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;color:#2c1b3d}
+    .logo i{color:#eab308;font-size:26px}
+    h2{margin:18px 0 6px;font-size:16px;color:#2c1b3d}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{border:1px solid #d1d5db;padding:8px 10px;text-align:center;font-size:13px}
+    th{background:#2c1b3d;color:#fff}
+    td.lbl{background:#f3f4f6;font-weight:800}
+    .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;font-size:13px}
+    .meta div{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px}
+    .foot{margin-top:28px;font-size:11px;color:#6b7280;text-align:center;border-top:1px dashed #d1d5db;padding-top:10px}
+    @media print{.noprint{display:none}}
+  </style></head><body>
+    <div class="head">
+      <div class="logo"><i class="fa-solid fa-eye"></i>${clinic.name}</div>
+      <div style="font-size:12px;color:#6b7280">${clinic.phone || ""}<br>وصفة فحص نظر</div>
+    </div>
+    <div class="meta">
+      <div><b>المريض:</b> ${patient.name}</div>
+      <div><b>التاريخ:</b> ${exam.date}</div>
+      <div><b>الفاحص:</b> ${exam.examiner}</div>
+      <div><b>PD:</b> ${exam.pd || "—"}</div>
+      <div><b>حدة الإبصار OD/OS:</b> ${exam.vaOD || "—"} / ${exam.vaOS || "—"}</div>
+      <div><b>نوع العدسة:</b> ${exam.lens || "—"}</div>
+    </div>
+    <h2>الرؤية البعيدة (Distance)</h2>
+    <table>
+      <tr><th rowspan="2">العين</th><th colspan="3">OD — اليمنى</th><th colspan="3">OS — اليسرى</th></tr>
+      <tr><th>SPH</th><th>CYL</th><th>AXIS</th><th>SPH</th><th>CYL</th><th>AXIS</th></tr>
+      ${row("بعيد", rx.distance.OD, rx.distance.OS)}
+    </table>
+    <h2>الرؤية القريبة (Near)</h2>
+    <table>
+      <tr><th rowspan="2">العين</th><th colspan="3">OD — اليمنى</th><th colspan="3">OS — اليسرى</th></tr>
+      <tr><th>SPH</th><th>CYL</th><th>AXIS</th><th>SPH</th><th>CYL</th><th>AXIS</th></tr>
+      ${row("قريب", rx.near.OD, rx.near.OS)}
+    </table>
+    ${exam.refraction ? `<h2>نتيجة الانكسار</h2><p style="font-size:13px">${exam.refraction}</p>` : ""}
+    ${exam.notes ? `<h2>ملاحظات</h2><p style="font-size:13px">${exam.notes}</p>` : ""}
+    <div class="foot">تم إصدار هذه الوصفة إلكترونياً بواسطة نظام الناظر لإدارة عيادات فحص النظر والبصريات</div>
+    <script>window.onload=()=>setTimeout(()=>window.print(),300)</script>
+  </body></html>`;
+
+  const w = window.open("", "_blank", "width=800,height=900");
+  w.document.write(html);
+  w.document.close();
+}
+```
+
+---
+
+## Part 4 — Mock Data + Global Store
+
+### `lib/data.js`
+
+```js
+// بيانات تجريبية — في الإنتاج تُستبدل بنداءات API
+export const seedExaminers = [
+  { id: 1, name: "د. سارة الحربي", phone: "0551112223", role: "أخصائية بصريات", active: true },
+  { id: 2, name: "د. خالد العتيبي", phone: "0554445556", role: "طبيب عيون", active: true },
+  { id: 3, name: "أ. محمد الزهراني", phone: "0557778889", role: "فني بصريات", active: false },
+];
+
+export const seedPatients = [
+  { id: 1, fileNo: "P-1001", name: "عبدالله بن سعد القحطاني", phone1: "0501234567", phone2: "", gender: "male",   dob: "1988-04-12", address: "الرياض — حي النرجس", notes: "حساسية من العدسات اللاصقة", lastVisit: "2026-08-10" },
+  { id: 2, fileNo: "P-1002", name: "نورة بنت فهد الدوسري",   phone1: "0507654321", phone2: "0112223334", gender: "female", dob: "1995-09-30", address: "الرياض — حي الملقا", notes: "", lastVisit: "2026-08-11" },
+  { id: 3, fileNo: "P-1003", name: "فيصل محمد الشمري",       phone1: "0509876543", phone2: "", gender: "male",   dob: "2001-01-18", address: "الخرج", notes: "قصر نظر متقدم", lastVisit: "2026-08-12" },
+  { id: 4, fileNo: "P-1004", name: "ريم عبدالعزيز السبيعي",  phone1: "0503334445", phone2: "", gender: "female", dob: "1979-06-22", address: "الرياض — حي العليا", notes: "متابعة ضغط عين", lastVisit: "2026-08-09" },
+];
+
+export const seedExams = [
+  { id: 1, patientId: 3, examinerId: 1, date: "2026-08-12", price: 150, lens: "عدسات أحادية البؤرة", reviewDate: "2026-08-19", invoiceNo: "INV-2041" },
+  { id: 2, patientId: 2, examinerId: 2, date: "2026-08-12", price: 200, lens: "عدسات متعددة البؤر",   reviewDate: "2026-08-26", invoiceNo: "INV-2040" },
+  { id: 3, patientId: 1, examinerId: 1, date: "2026-08-10", price: 150, lens: "عدسات أسطوانية",       reviewDate: "2026-08-12", invoiceNo: "INV-2038" },
+  { id: 4, patientId: 4, examinerId: 2, date: "2026-08-09", price: 250, lens: "عدسات مضادة للضوء الأزرق", reviewDate: "2026-08-16", invoiceNo: "INV-2036" },
+];
+
+export const seedInvoices = [
+  { id: 1, no: "INV-2041", date: "2026-08-12", patientId: 3, total: 650, paid: 650, method: "cash",         status: "paid" },
+  { id: 2, no: "INV-2040", date: "2026-08-12", patientId: 2, total: 1200, paid: 600, method: "installments", status: "partial" },
+  { id: 3, no: "INV-2039", date: "2026-08-11", patientId: 1, total: 320, paid: 0,   method: "cash",         status: "unpaid" },
+  { id: 4, no: "INV-2038", date: "2026-08-10", patientId: 1, total: 480, paid: 480, method: "card",         status: "paid" },
+  { id: 5, no: "INV-2036", date: "2026-08-09", patientId: 4, total: 950, paid: 300, method: "installments", status: "partial" },
+];
+
+export const seedProducts = [
+  { id: 1, name: "عدسات زيد ستات 1.56", barcode: "6221001", cat: "lenses",  buy: 60,  sell: 160, qty: 24, min: 10, notes: "" },
+  { id: 2, name: "إطار ريبان RB5154",   barcode: "6221002", cat: "frames",  buy: 220, sell: 520, qty: 3,  min: 5,  notes: "الأكثر طلباً" },
+  { id: 3, name: "نظارة طبية أطفال مرنة", barcode: "6221003", cat: "medical_glasses", buy: 90, sell: 240, qty: 12, min: 6, notes: "" },
+  { id: 4, name: "عدسات متعددة البؤر بروجرسف", barcode: "6221004", cat: "lenses", buy: 300, sell: 780, qty: 2, min: 4, notes: "طلب مسبق" },
+  { id: 5, name: "محلول تنظيف العدسات",  barcode: "6221005", cat: "accessories", buy: 15, sell: 45, qty: 40, min: 15, notes: "" },
+];
+
+export const seedFollowups = [
+  { id: 1, patientId: 1, date: "2026-08-12", time: "10:30", status: "pending", notes: "مراجعة بعد فحص العدسات" },
+  { id: 2, patientId: 3, date: "2026-08-12", time: "12:00", status: "pending", notes: "استلام النظارة" },
+  { id: 3, patientId: 2, date: "2026-08-13", time: "11:00", status: "pending", notes: "" },
+  { id: 4, patientId: 4, date: "2026-08-10", time: "09:30", status: "overdue", notes: "لم يحضر — إعادة جدولة" },
+  { id: 5, patientId: 1, date: "2026-08-05", time: "13:00", status: "done",    notes: "تم الحضور" },
+];
+
+export const seedUsers = [
+  { id: 1, name: "أبو حسين", username: "admin", role: "admin", active: true },
+  { id: 2, name: "منى السالم", username: "mona.acc", role: "accountant", active: true },
+  { id: 3, name: "يوسف النمر", username: "yousef.rec", role: "receptionist", active: false },
+];
+
+export const roleAr = { admin: "مدير النظام", accountant: "محاسب", receptionist: "موظف استقبال", examiner: "فاحص" };
+export const payAr  = { cash: "نقدي", card: "شبكة", installments: "أقساط", transfer: "تحويل" };
+export const catAr  = { lenses: "عدسات", frames: "إطارات", medical_glasses: "نظارات طبية", accessories: "إكسسوارات", other: "أخرى" };
+```
+
+---
+
+## Part 5 — Reusable UI Components
+
+### `components/ui.jsx`
+
+```jsx
+"use client";
+import React from "react";
+
+export const Card = ({ className = "", children }) => (
+  <div className={`card ${className}`}>{children}</div>
+);
+
+export const CardHeader = ({ icon, title, action }) => (
+  <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+    <div className="flex items-center gap-2.5">
+      {icon && <span className="text-accent">{icon}</span>}
+      <h3 className="text-base font-extrabold text-primary">{title}</h3>
+    </div>
+    {action}
+  </div>
+);
+
+export function Modal({ open, onClose, title, children, wide = false }) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-primary/60 backdrop-blur-sm" onClick={onClose} />
+      <div className={`card relative w-full ${wide ? "max-w-4xl" : "max-w-lg"} max-h-[92vh] overflow-y-auto shadow-pop`}>
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white px-6 py-4 rounded-t-xl2">
+          <h3 className="text-lg font-extrabold text-primary">{title}</h3>
+          <button onClick={onClose} className="icon-btn text-gray-400 hover:text-danger">
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div className="p-6">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+export const Field = ({ label, required, children }) => (
+  <div>
+    <label className="field-label">
+      {label} {required && <span className="text-danger">*</span>}
+    </label>
+    {children}
+  </div>
+);
+
+export const Input = ({ icon, ...props }) =>
+  icon ? (
+    <div className="relative">
+      <input {...props} className={`input ${icon ? "pr-10" : ""}`} />
+      <i className={`fa-solid ${icon} absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400`} />
+    </div>
+  ) : (
+    <input {...props} className="input" />
+  );
+
+export const Select = ({ children, ...props }) => (
+  <select {...props} className="input appearance-none cursor-pointer">{children}</select>
+);
+
+export const Toggle = ({ on, onChange }) => (
+  <button
+    type="button"
+    onClick={() => onChange(!on)}
+    className={`relative h-6 w-11 rounded-full transition ${on ? "bg-success" : "bg-gray-300"}`}
+  >
+    <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${on ? "right-0.5" : "right-5"}`} />
+  </button>
+);
+
+export const Badge = ({ color, children }) => {
+  const map = {
+    green:  "bg-emerald-50 text-success",
+    red:    "bg-red-50 text-danger",
+    orange: "bg-orange-50 text-orange-500",
+    blue:   "bg-blue-50 text-info",
+    gray:   "bg-gray-100 text-gray-600",
+    yellow: "bg-accent-soft text-yellow-700",
+  };
+  return <span className={`chip ${map[color] || map.gray}`}>{children}</span>;
+};
+
+export const EmptyRow = ({ span, text = "لا توجد بيانات لعرضها" }) => (
+  <tr><td colSpan={span} className="td py-10 text-center text-gray-400">
+    <i className="fa-regular fa-folder-open ml-2 text-2xl align-middle" />{text}
+  </td></tr>
+);
+```
+
+---
+
+## Part 6 — Sidebar + Topbar (Main Layout)
+
+### `components/Sidebar.jsx`
+
+```jsx
+"use client";
+import React from "react";
+
+const NAV = [
+  { id: "dashboard",  label: "الرئيسية",            icon: "fa-house" },
+  { id: "patients",   label: "المرضى",              icon: "fa-users" },
+  { id: "followups",  label: "تنبيهات المراجعات",    icon: "fa-bell" },
+  { id: "examiners",  label: "الفاحصون",            icon: "fa-user-doctor" },
+  { id: "invoices",   label: "الفواتير والمبيعات",   icon: "fa-file-invoice-dollar" },
+  { id: "products",   label: "المنتجات",            icon: "fa-boxes-stacked" },
+  { id: "reports",    label: "التقارير",            icon: "fa-chart-column" },
+  { id: "users",      label: "المستخدمون",          icon: "fa-user-shield" },
+  { id: "settings",   label: "الإعدادات",           icon: "fa-gear" },
+];
+
+export default function Sidebar({ page, setPage, onLogout }) {
+  return (
+    // الشريط الجانبي مثبّت على اليمين — مناسب لاتجاه RTL
+    <aside className="fixed inset-y-0 right-0 z-40 flex w-64 flex-col bg-primary text-white">
+      {/* الشعار */}
+      <div className="flex items-center gap-3 border-b border-white/10 px-5 py-5">
+        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-primary">
+          <i className="fa-solid fa-eye text-xl" />
+        </span>
+        <div>
+          <div className="text-lg font-black leading-none">الناظر</div>
+          <div className="mt-1 text-[11px] text-white/60">لإدارة عيادات فحص النظر والبصريات</div>
+        </div>
+      </div>
+
+      {/* روابط التنقل */}
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
+        {NAV.map((item) => {
+          const active = page === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setPage(item.id)}
+              className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-bold transition
+                ${active
+                  ? "bg-accent text-primary shadow-md"               // الحالة النشطة: أصفر بنص داكن
+                  : "text-white/70 hover:bg-white/10 hover:text-white"}`}
+            >
+              <i className={`fa-solid ${item.icon} w-5 text-center`} />
+              {item.label}
+              {item.id === "followups" && (
+                <span className="mr-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-danger px-1 text-[10px] font-black text-white">
+                  2
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* تسجيل الخروج */}
+      <div className="border-t border-white/10 p-3">
+        <button
+          onClick={onLogout}
+          className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-bold text-white/70 transition hover:bg-danger hover:text-white"
+        >
+          <i className="fa-solid fa-right-from-bracket w-5 text-center" />
+          تسجيل الخروج
+        </button>
+      </div>
+    </aside>
+  );
+}
+```
+
+### `components/Topbar.jsx`
+
+```jsx
+"use client";
+import React from "react";
+import { longDate } from "@/lib/utils";
+
+export default function Topbar({ title }) {
+  return (
+    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-3.5 shadow-sm">
+      <h1 className="text-lg font-extrabold text-primary">{title}</h1>
+
+      <div className="flex items-center gap-5">
+        {/* التاريخ الحالي */}
+        <span className="hidden items-center gap-2 text-sm text-gray-500 md:flex">
+          <i className="fa-regular fa-calendar-days text-accent" />
+          {longDate()}
+        </span>
+
+        {/* جرس الإشعارات مع النقطة الحمراء */}
+        <button className="relative flex h-10 w-10 items-center justify-center rounded-lg text-gray-500 transition hover:bg-gray-100">
+          <i className="fa-regular fa-bell text-lg" />
+          <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full border-2 border-white bg-danger" />
+        </button>
+
+        <span className="h-8 w-px bg-gray-200" />
+
+        {/* صورة المدير والدور */}
+        <div className="flex items-center gap-3">
+          <div className="text-left">
+            <div className="text-sm font-extrabold leading-none text-gray-800">أبو حسين</div>
+            <div className="mt-1 text-[11px] font-bold text-accent">مدير النظام</div>
+          </div>
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary font-black text-accent ring-2 ring-accent">
+            أح
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+```
+
+---
+
+## Part 7 — Login (Splash) Screen
+
+### `app/page.jsx`
+
+```jsx
+"use client";
+import React, { useState } from "react";
+import Shell from "@/components/Shell";
+
+export default function Home() {
+  const [authed, setAuthed] = useState(false);
+  if (!authed) return <Login onLogin={() => setAuthed(true)} />;
+  return <Shell onLogout={() => setAuthed(false)} />;
+}
+
+function Login({ onLogin }) {
+  const [u, setU] = useState("admin");
+  const [p, setP] = useState("••••••••");
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-primary p-4">
+      <div className="w-full max-w-md rounded-xl2 bg-white p-8 shadow-pop">
+        {/* الشعار */}
+        <div className="mb-8 text-center">
+          <span className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-accent shadow-lg">
+            <i className="fa-solid fa-eye text-3xl" />
+          </span>
+          <h1 className="text-3xl font-black text-primary">الناظر</h1>
+          <p className="mt-1.5 text-sm text-gray-500">لإدارة عيادات فحص النظر والبصريات</p>
+        </div>
+
+        {/* الحقول */}
+        <form onSubmit={(e) => { e.preventDefault(); onLogin(); }} className="space-y-4">
+          <div className="relative">
+            <input
+              className="input pr-11" placeholder="اسم المستخدم" value={u}
+              onChange={(e) => setU(e.target.value)}
+            />
+            <i className="fa-regular fa-user absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
+          </div>
+          <div className="relative">
+            <input
+              type="password" className="input pr-11" placeholder="كلمة المرور" value={p}
+              onChange={(e) => setP(e.target.value)}
+            />
+            <i className="fa-solid fa-lock absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
+          </div>
+
+          <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
+            <input type="checkbox" defaultChecked className="h-4 w-4 accent-yellow-500" />
+            تذكرني على هذا الجهاز
+          </label>
+
+          <button type="submit" className="btn-accent w-full py-3 text-base">
+            <i className="fa-solid fa-right-to-bracket" /> تسجيل الدخول
+          </button>
+        </form>
+
+        <p className="mt-6 text-center text-[11px] text-gray-400">
+          الناظر v1.0.0 — أغسطس 2026
+        </p>
+      </div>
+    </div>
+  );
+}
+```
+
+### `components/Shell.jsx` — يربط الشريط الجانبي + العلوي + الصفحات
+
+```jsx
+"use client";
+import React, { useState } from "react";
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
+import Dashboard from "@/pages/Dashboard";
+import Patients from "@/pages/Patients";
+import Followups from "@/pages/Followups";
+import Examiners from "@/pages/Examiners";
+import Invoices from "@/pages/Invoices";
+import Products from "@/pages/Products";
+import Reports from "@/pages/Reports";
+import Users from "@/pages/Users";
+import Settings from "@/pages/Settings";
+
+const TITLES = {
+  dashboard: "لوحة التحكم", patients: "إدارة المرضى", followups: "تنبيهات المراجعات",
+  examiners: "الفاحصون والكادر", invoices: "الفواتير والمبيعات", products: "المنتجات والمخزون",
+  reports: "التقارير", users: "المستخدمون والصلاحيات", settings: "الإعدادات",
+};
+
+export default function Shell({ onLogout }) {
+  const [page, setPage] = useState("dashboard");
+
+  return (
+    <div className="min-h-screen bg-surface">
+      <Sidebar page={page} setPage={setPage} onLogout={onLogout} />
+      {/* المحتوى الرئيسي يبدأ من اليمين بعد عرض الشريط الجانبي */}
+      <div className="mr-64 flex min-h-screen flex-col">
+        <Topbar title={TITLES[page]} />
+        <main className="flex-1 p-6">
+          {page === "dashboard" && <Dashboard go={setPage} />}
+          {page === "patients"  && <Patients />}
+          {page === "followups" && <Followups />}
+          {page === "examiners" && <Examiners />}
+          {page === "invoices"  && <Invoices />}
+          {page === "products"  && <Products />}
+          {page === "reports"   && <Reports />}
+          {page === "users"     && <Users />}
+          {page === "settings"  && <Settings />}
+        </main>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Part 8 — Dashboard (الرئيسية)
+
+### `pages/Dashboard.jsx`
+
+```jsx
+"use client";
+import React from "react";
+import { Card, CardHeader, Badge, EmptyRow } from "@/components/ui";
+import { seedExams, seedInvoices, seedPatients, seedProducts } from "@/lib/data";
+import { fmtMoney, fmtDate } from "@/lib/utils";
+
+const pName = (id) => seedPatients.find((p) => p.id === id)?.name || "—";
+
+export default function Dashboard({ go }) {
+  const todayExams = seedExams.filter((e) => e.date === "2026-08-12");
+  const lowStock = seedProducts.filter((p) => p.qty <= p.min);
+  const todaySales = seedInvoices.filter((i) => i.date === "2026-08-12").reduce((s, i) => s + i.paid, 0);
+  const todayIncome = todaySales + todayExams.reduce((s, e) => s + e.price, 0);
+
+  const stats = [
+    { label: "فحوصات اليوم",          value: todayExams.length, icon: "fa-file-medical",      bg: "bg-purple-100", fg: "text-purple-600" },
+    { label: "تنبيهات نقص المخزون",    value: lowStock.length,   icon: "fa-box-open",          bg: "bg-blue-100",   fg: "text-info" },
+    { label: "مبيعات اليوم",          value: fmtMoney(todaySales), icon: "fa-cart-shopping",  bg: "bg-teal-100",   fg: "text-teal" },
+    { label: "إجمالي دخل اليوم",       value: fmtMoney(todayIncome), icon: "fa-sack-dollar",  bg: "bg-emerald-100",fg: "text-success" },
+  ];
+
+  return (
+    <div className="space-y-6">
+      {/* بطاقات الإحصائيات الأربع */}
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        {stats.map((s) => (
+          <Card key={s.label} className="flex items-center gap-4 p-5 transition hover:-translate-y-0.5 hover:shadow-lg">
+            <span className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl2 ${s.bg} ${s.fg}`}>
+              <i className={`fa-solid ${s.icon} text-2xl`} />
+            </span>
+            <div>
+              <div className="text-2xl font-black text-primary">{s.value}</div>
+              <div className="mt-0.5 text-sm font-bold text-gray-500">{s.label}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      {/* الجدولان جنبًا إلى جنب */}
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+        {/* آخر الفحوصات */}
+        <Card>
+          <CardHeader
+            icon={<i className="fa-solid fa-stethoscope" />}
+            title="آخر الفحوصات"
+            action={<button onClick={() => go("patients")} className="text-xs font-bold text-info hover:underline">عرض الكل</button>}
+          />
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="th">اسم المريض</th><th className="th">الفاحص</th>
+                  <th className="th">التاريخ</th><th className="th">السعر</th><th className="th">رقم الفاتورة</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {seedExams.map((e) => (
+                  <tr key={e.id} className="transition hover:bg-accent-soft/40">
+                    <td className="td font-bold text-gray-800">{pName(e.patientId)}</td>
+                    <td className="td">{seedExams && (e.examinerId === 1 ? "د. سارة الحربي" : "د. خالد العتيبي")}</td>
+                    <td className="td text-gray-500">{fmtDate(e.date)}</td>
+                    <td className="td font-bold text-success">{fmtMoney(e.price)}</td>
+                    <td className="td"><Badge color="yellow">{e.invoiceNo}</Badge></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+
+        {/* آخر الفواتير */}
+        <Card>
+          <CardHeader
+            icon={<i className="fa-solid fa-receipt" />}
+            title="آخر الفواتير"
+            action={<button onClick={() => go("invoices")} className="text-xs font-bold text-info hover:underline">عرض الكل</button>}
+          />
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="th">اسم المريض</th><th className="th">الإجمالي</th>
+                  <th className="th">المتبقي</th><th className="th">حالة الدفع</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {seedInvoices.slice(0, 4).map((i) => {
+                  const rem = i.total - i.paid;
+                  const st = i.status === "paid" ? ["green", "مدفوعة"] : i.status === "partial" ? ["orange", "جزئي"] : ["red", "غير مدفوعة"];
+                  return (
+                    <tr key={i.id} className="transition hover:bg-accent-soft/40">
+                      <td className="td font-bold text-gray-800">{pName(i.patientId)}</td>
+                      <td className="td">{fmtMoney(i.total)}</td>
+                      <td className={`td font-bold ${rem > 0 ? "text-danger" : "text-gray-400"}`}>{fmtMoney(rem)}</td>
+                      <td className="td"><Badge color={st[0]}>{st[1]}</Badge></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Part 9 — Patients + Patient File + Eye Exam Form (النموذج الحرج)
+
+### `pages/Patients.jsx`
+
+```jsx
+"use client";
+import React, { useState, useMemo } from "react";
+import { Card, Modal, Field, Input, Select, Badge, EmptyRow } from "@/components/ui";
+import { seedPatients, seedExams, seedExaminers } from "@/lib/data";
+import { fmtMoney, fmtDate, printPrescription, openWhatsApp, todayISO } from "@/lib/utils";
+import ExamForm from "@/components/ExamForm";
+
+export default function Patients() {
+  const [patients, setPatients] = useState(seedPatients);
+  const [exams, setExams] = useState(seedExams);
+  const [query, setQuery] = useState("");
+  const [addOpen, setAddOpen] = useState(false);
+  const [fileOf, setFileOf] = useState(null);          // ملف المريض المفتوح
+  const [examFor, setExamFor] = useState(null);        // فتح نموذج فحص
+
+  const filtered = useMemo(
+    () => patients.filter((p) => p.name.includes(query) || (p.phone1 || "").includes(query)),
+    [patients, query]
+  );
+
+  // ---------- حفظ مريض جديد ----------
+  const savePatient = (data) => {
+    const id = Math.max(...patients.map((p) => p.id)) + 1;
+    setPatients([...patients, { id, fileNo: `P-${1000 + id}`, lastVisit: "—", ...data }]);
+    setAddOpen(false);
+  };
+
+  const removePatient = (id) => {
+    if (confirm("هل أنت متأكد من حذف هذا المريض؟ سيتم حذف جميع فحوصاته."))
+      setPatients(patients.filter((p) => p.id !== id));
+  };
+
+  // ---------- ملف المريض ----------
+  if (fileOf) {
+    const patient = patients.find((p) => p.id === fileOf);
+    const pExams = exams.filter((e) => e.patientId === fileOf);
+    return (
+      <div className="space-y-6">
+        {/* بطاقة معلومات المريض */}
+        <Card className="p-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-2xl font-black text-accent">
+                {patient.name.charAt(0)}
+              </span>
+              <div>
+                <h2 className="text-xl font-black text-primary">{patient.name}</h2>
+                <div className="mt-1 flex flex-wrap gap-4 text-sm text-gray-500">
+                  <span><i className="fa-solid fa-hashtag ml-1 text-accent" />{patient.fileNo}</span>
+                  <span><i className="fa-solid fa-phone ml-1 text-accent" />{patient.phone1}</span>
+                  <span><i className={`fa-solid ${patient.gender === "male" ? "fa-mars" : "fa-venus"} ml-1 text-accent`} />{patient.gender === "male" ? "ذكر" : "أنثى"}</span>
+                  <span><i className="fa-regular fa-calendar ml-1 text-accent" />آخر زيارة: {patient.lastVisit}</span>
+                </div>
+                {patient.notes && <p className="mt-2 rounded-lg bg-orange-50 px-3 py-1.5 text-xs font-bold text-orange-600"><i className="fa-solid fa-triangle-exclamation ml-1" />{patient.notes}</p>}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => setExamFor(patient)} className="btn-accent">
+                <i className="fa-solid fa-plus" /> فحص جديد
+              </button>
+              <button onClick={() => setFileOf(null)} className="btn-ghost">
+                <i className="fa-solid fa-arrow-right" /> رجوع
+              </button>
+            </div>
+          </div>
+        </Card>
+
+        {/* سجل الفحوصات */}
+        <Card>
+          <div className="border-b border-gray-100 px-5 py-4">
+            <h3 className="font-extrabold text-primary"><i className="fa-solid fa-clock-rotate-left ml-2 text-accent" />سجل الفحوصات السابقة</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="th">التاريخ</th><th className="th">نوع العدسة</th><th className="th">الفاحص</th>
+                  <th className="th">السعر</th><th className="th">موعد المراجعة</th><th className="th">إجراءات</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {pExams.length === 0 && <EmptyRow span={6} text="لا توجد فحوصات سابقة — ابدأ بإضافة فحص جديد" />}
+                {pExams.map((e) => (
+                  <tr key={e.id} className="hover:bg-accent-soft/40">
+                    <td className="td font-bold">{fmtDate(e.date)}</td>
+                    <td className="td">{e.lens}</td>
+                    <td className="td">{seedExaminers.find((x) => x.id === e.examinerId)?.name}</td>
+                    <td className="td font-bold text-success">{fmtMoney(e.price)}</td>
+                    <td className="td">{e.reviewDate ? fmtDate(e.reviewDate) : "—"}</td>
+                    <td className="td">
+                      <div className="flex gap-1">
+                        <button title="طباعة الوصفة" className="icon-btn text-primary hover:bg-primary hover:text-white"
+                          onClick={() => printPrescription({
+                            patient, exam: { date: fmtDate(e.date), examiner: seedExaminers.find(x=>x.id===e.examinerId)?.name, pd: e.pd, vaOD: e.vaOD, vaOS: e.vaOS, lens: e.lens, refraction: e.refraction, notes: e.notes },
+                            rx: e.rx || { distance: { OD: {}, OS: {} }, near: { OD: {}, OS: {} } },
+                            clinic: { name: "الناظر", phone: "0112345678" },
+                          })}>
+                          <i className="fa-solid fa-print" />
+                        </button>
+                        <button title="إرسال واتساب" className="icon-btn text-success hover:bg-success hover:text-white"
+                          onClick={() => openWhatsApp({ phone: patient.phone1, name: patient.name, date: e.reviewDate || todayISO(), time: "10:00" })}>
+                          <i className="fa-brands fa-whatsapp" />
+                        </button>
+                        <button title="تعديل" className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-pen" /></button>
+                        <button title="حذف" className="icon-btn text-danger hover:bg-danger hover:text-white"
+                          onClick={() => setExams(exams.filter((x) => x.id !== e.id))}>
+                          <i className="fa-solid fa-trash" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+
+        {examFor && (
+          <ExamForm
+            patient={examFor}
+            onClose={() => setExamFor(null)}
+            onSave={(exam) => {
+              const id = Math.max(0, ...exams.map((e) => e.id)) + 1;
+              setExams([...exams, { id, patientId: examFor.id, ...exam }]);
+              setExamFor(null);
+            }}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // ---------- قائمة المرضى الرئيسية ----------
+  return (
+    <div className="space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <h2 className="text-xl font-black text-primary">المرضى</h2>
+          <Badge color="yellow">{patients.length} مريض</Badge>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="relative w-72">
+            <Input placeholder="بحث بالاسم أو رقم الجوال..." value={query} onChange={(e) => setQuery(e.target.value)} />
+            <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+          </div>
+          <button onClick={() => setAddOpen(true)} className="btn-accent">
+            <i className="fa-solid fa-plus" /> إضافة مريض
+          </button>
+        </div>
+      </div>
+
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="th">الاسم</th><th className="th">الجوال</th><th className="th">رقم الملف</th>
+                <th className="th">آخر زيارة</th><th className="th">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filtered.length === 0 && <EmptyRow span={5} text="لا توجد نتائج مطابقة للبحث" />}
+              {filtered.map((p) => (
+                <tr key={p.id} className="transition hover:bg-accent-soft/40">
+                  <td className="td font-bold text-gray-800">
+                    <i className={`fa-solid ${p.gender === "male" ? "fa-mars text-info" : "fa-venus text-pink-500"} ml-2`} />{p.name}
+                  </td>
+                  <td className="td" dir="ltr">{p.phone1}</td>
+                  <td className="td"><Badge color="gray">{p.fileNo}</Badge></td>
+                  <td className="td text-gray-500">{p.lastVisit}</td>
+                  <td className="td">
+                    <div className="flex gap-1">
+                      <button title="عرض الملف" className="icon-btn text-primary hover:bg-primary hover:text-white" onClick={() => setFileOf(p.id)}>
+                        <i className="fa-solid fa-folder-open" />
+                      </button>
+                      <button title="تعديل" className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-pen" /></button>
+                      <button title="حذف" className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => removePatient(p.id)}>
+                        <i className="fa-solid fa-trash" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {addOpen && <AddPatientModal onClose={() => setAddOpen(false)} onSave={savePatient} />}
+    </div>
+  );
+}
+
+function AddPatientModal({ onClose, onSave }) {
+  const [f, setF] = useState({ name: "", phone1: "", phone2: "", gender: "male", dob: "", address: "", notes: "" });
+  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+  return (
+    <Modal open onClose={onClose} title="إضافة مريض جديد">
+      <form onSubmit={(e) => { e.preventDefault(); if (f.name.trim()) onSave(f); }} className="space-y-4">
+        <Field label="الاسم الكامل" required>
+          <Input required placeholder="أدخل اسم المريض الثلاثي" value={f.name} onChange={set("name")} />
+        </Field>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="رقم الجوال 1"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone1} onChange={set("phone1")} /></Field>
+          <Field label="رقم الجوال 2"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone2} onChange={set("phone2")} /></Field>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <Field label="الجنس">
+            <div className="flex items-center gap-6 rounded-lg border border-gray-300 px-3 py-2.5">
+              <label className="flex cursor-pointer items-center gap-2 text-sm">
+                <input type="radio" name="g" checked={f.gender === "male"} onChange={() => setF({ ...f, gender: "male" })} className="accent-yellow-500" /> ذكر
+              </label>
+              <label className="flex cursor-pointer items-center gap-2 text-sm">
+                <input type="radio" name="g" checked={f.gender === "female"} onChange={() => setF({ ...f, gender: "female" })} className="accent-yellow-500" /> أنثى
+              </label>
+            </div>
+          </Field>
+          <Field label="تاريخ الميلاد"><Input type="date" value={f.dob} onChange={set("dob")} /></Field>
+        </div>
+        <Field label="العنوان"><Input placeholder="المدينة — الحي" value={f.address} onChange={set("address")} /></Field>
+        <Field label="ملاحظات"><textarea className="input min-h-20" placeholder="أي ملاحظات طبية مهمة..." value={f.notes} onChange={set("notes")} /></Field>
+        <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
+          <button type="button" onClick={onClose} className="btn-outline-danger">إلغاء</button>
+          <button type="submit" className="btn-accent"><i className="fa-solid fa-floppy-disk" /> حفظ</button>
+        </div>
+      </form>
+    </Modal>
+  );
+}
+```
+
+### `components/ExamForm.jsx` — **إدارة حالة شبكة الفحص المعقدة**
+
+هذا هو الجزء الحرج: شبكة (Distance/Near) × (OD/OS) × (SPH/CYL/AXIS) مع `useReducer` لتحديث مسار عميق (deep-path updates).
+
+```jsx
+"use client";
+import React, { useReducer } from "react";
+import { Modal, Field, Input, Select } from "@/components/ui";
+import { seedExaminers } from "@/lib/data";
+import { todayISO } from "@/lib/utils";
+
+// ------------------------------------------------------------
+// الحالة الابتدائية للشبكة — كل عين في كل قسم لها SPH/CYL/AXIS
+// ------------------------------------------------------------
+const emptyEye = () => ({ SPH: "", CYL: "", AXIS: "" });
+
+const initialState = {
+  distance: { OD: emptyEye(), OS: emptyEye() },
+  near:     { OD: emptyEye(), OS: emptyEye() },
+  pd: "",
+  vaOD: "", vaOS: "",
+  refraction: "",
+  examinerId: "", lensType: "",
+  date: todayISO(), reviewDate: "",
+  notes: "", price: "",
+};
+
+// ------------------------------------------------------------
+// المُخفِّض: يدعم التحديث عبر مسار عميق مثل
+// { type:"rx", section:"distance", eye:"OD", field:"SPH", value:"-1.25" }
+// ------------------------------------------------------------
+function reducer(state, action) {
+  switch (action.type) {
+    case "rx": {
+      const { section, eye, field, value } = action;
+      // منع إدخال غير رقمي سوى الإشارة والنقطة
+      if (value !== "" && !/^-?\d*\.?\d*$/.test(value) && field !== "AXIS") return state;
+      if (field === "AXIS" && value !== "" && !/^\d{0,3}$/.test(value)) return state;
+      if (field === "AXIS" && value !== "" && (Number(value) < 0 || Number(value) > 180)) return state;
+      return {
+        ...state,
+        [section]: { ...state[section], [eye]: { ...state[section][eye], [field]: value } },
+      };
+    }
+    case "set":
+      return { ...state, [action.field]: action.value };
+    case "reset":
+      return initialState;
+    default:
+      return state;
+  }
+}
+
+const LENS_TYPES = ["عدسات أحادية البؤرة", "عدسات متعددة البؤر", "عدسات أسطوانية", "عدسات مضادة للضوء الأزرق", "عدسات لاصقة", "أخرى"];
+
+// خلية إدخال واحدة داخل الشبكة
+const RxCell = ({ value, onChange, placeholder, axis }) => (
+  <input
+    dir="ltr"
+    value={value}
+    onChange={(e) => onChange(e.target.value)}
+    placeholder={placeholder}
+    className={`input h-10 px-2 text-center font-mono text-sm ${axis ? "" : ""}`}
+  />
+);
+
+// صف عين واحدة (OD أو OS) داخل قسم
+function EyeRow({ section, eye, state, dispatch }) {
+  const set = (field) => (value) => dispatch({ type: "rx", section, eye, field, value });
+  const ar = eye === "OD" ? "اليمنى" : "اليسرى";
+  return (
+    <div className="grid grid-cols-[90px_1fr_1fr_1fr] items-center gap-3">
+      <div className="flex items-center gap-2">
+        <span className={`flex h-8 w-11 items-center justify-center rounded-lg text-xs font-black
+          ${eye === "OD" ? "bg-purple-100 text-purple-700" : "bg-teal-100 text-teal-700"}`}>{eye}</span>
+        <span className="text-xs font-bold text-gray-500">{ar}</span>
+      </div>
+      <RxCell value={state[section][eye].SPH} onChange={set("SPH")} placeholder="SPH" />
+      <RxCell value={state[section][eye].CYL} onChange={set("CYL")} placeholder="CYL" />
+      <RxCell value={state[section][eye].AXIS} onChange={set("AXIS")} placeholder="AXIS" axis />
+    </div>
+  );
+}
+
+// قسم كامل (بعيد أو قريب)
+function RxSection({ title, icon, section, state, dispatch, tone }) {
+  return (
+    <div className={`rounded-xl2 border-2 p-4 ${tone}`}>
+      <div className="mb-3 flex items-center justify-between">
+        <h4 className="flex items-center gap-2 font-extrabold text-primary">
+          <i className={`fa-solid ${icon}`} /> {title}
+        </h4>
+        <div className="grid w-full max-w-[260px] grid-cols-3 gap-3 text-center text-[10px] font-black text-gray-400">
+          <span>SPH</span><span>CYL</span><span>AXIS</span>
+        </div>
+      </div>
+      <div className="space-y-3">
+        <EyeRow section={section} eye="OD" state={state} dispatch={dispatch} />
+        <EyeRow section={section} eye="OS" state={state} dispatch={dispatch} />
+      </div>
+    </div>
+  );
+}
+
+export default function ExamForm({ patient, onClose, onSave }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const set = (field) => (e) => dispatch({ type: "set", field, value: e.target.value });
+
+  const submit = () => {
+    if (!state.examinerId) return alert("يرجى اختيار الفاحص");
+    onSave({
+      date: state.date, price: Number(state.price) || 0,
+      examinerId: Number(state.examinerId), lensType: state.lensType,
+      reviewDate: state.reviewDate, notes: state.notes,
+      pd: state.pd, vaOD: state.vaOD, vaOS: state.vaOS, refraction: state.refraction,
+      rx: { distance: state.distance, near: state.near },
+      invoiceNo: `INV-${Math.floor(2000 + Math.random() * 999)}`,
+    });
+  };
+
+  return (
+    <Modal open onClose={onClose} wide title={`نموذج فحص النظر — ${patient.name}`}>
+      <div className="space-y-5">
+        {/* ===== شبكة الوصفة: البعيد والقريب ===== */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <RxSection title="الرؤية البعيدة (DISTANCE)" icon="fa-mountain-sun" section="distance"
+            state={state} dispatch={dispatch} tone="border-purple-200 bg-purple-50/50" />
+          <RxSection title="الرؤية القريبة (NEAR)" icon="fa-book-open-reader" section="near"
+            state={state} dispatch={dispatch} tone="border-teal-200 bg-teal-50/50" />
+        </div>
+
+        {/* ===== PD + حدة الإبصار ===== */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <Field label="المسافة بين البؤبؤين (PD)">
+            <Input dir="ltr" placeholder="مثال: 62" value={state.pd} onChange={set("pd")} />
+          </Field>
+          <Field label="حدة الإبصار — اليمنى (VA OD)">
+            <Input dir="ltr" placeholder="مثال: 6/6" value={state.vaOD} onChange={set("vaOD")} />
+          </Field>
+          <Field label="حدة الإبصار — اليسرى (VA OS)">
+            <Input dir="ltr" placeholder="مثال: 6/9" value={state.vaOS} onChange={set("vaOS")} />
+          </Field>
+        </div>
+
+        <Field label="نتيجة الانكسار (Refraction Result)">
+          <textarea className="input min-h-16" placeholder="اكتب نتيجة الانكسار النهائية..." value={state.refraction} onChange={set("refraction")} />
+        </Field>
+
+        {/* ===== الفاحص ونوع العدسة ===== */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Field label="الفاحص" required>
+            <Select value={state.examinerId} onChange={set("examinerId")}>
+              <option value="">— اختر الفاحص —</option>
+              {seedExaminers.filter((x) => x.active).map((x) => (
+                <option key={x.id} value={x.id}>{x.name} — {x.role}</option>
+              ))}
+            </Select>
+          </Field>
+          <Field label="نوع العدسة">
+            <Select value={state.lensType} onChange={set("lensType")}>
+              <option value="">— اختر نوع العدسة —</option>
+              {LENS_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+            </Select>
+          </Field>
+        </div>
+
+        {/* ===== معلومات عامة ===== */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <Field label="تاريخ الفحص"><Input type="date" value={state.date} onChange={set("date")} /></Field>
+          <Field label="موعد المراجعة"><Input type="date" value={state.reviewDate} onChange={set("reviewDate")} /></Field>
+          <Field label="سعر الفحص"><Input dir="ltr" type="number" min="0" placeholder="150" value={state.price} onChange={set("price")} /></Field>
+        </div>
+
+        <Field label="ملاحظات"><textarea className="input min-h-16" placeholder="ملاحظات إضافية..." value={state.notes} onChange={set("notes")} /></Field>
+
+        {/* ===== أزرار الحفظ ===== */}
+        <div className="flex items-center justify-between border-t border-gray-100 pt-4">
+          <button onClick={() => dispatch({ type: "reset" })} className="btn-ghost">
+            <i className="fa-solid fa-rotate-right" /> تفريغ الحقول
+          </button>
+          <div className="flex gap-3">
+            <button onClick={onClose} className="btn-outline-danger">إلغاء</button>
+            <button onClick={submit} className="btn-accent"><i className="fa-solid fa-floppy-disk" /> حفظ الفحص</button>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+```
+
+---
+
+## Part 10 — Follow-ups, Examiners, Invoices, Products, Reports, Users, Settings
+
+### `pages/Followups.jsx`
+
+```jsx
+"use client";
+import React, { useState } from "react";
+import { Card, Modal, Badge, Field, Input, EmptyRow } from "@/components/ui";
+import { seedFollowups, seedPatients } from "@/lib/data";
+import { openWhatsApp, fmtDate } from "@/lib/utils";
+
+const p = (id) => seedPatients.find((x) => x.id === id);
+
+export default function Followups() {
+  const [rows, setRows] = useState(seedFollowups);
+  const [wa, setWa] = useState(null); // عنصر واتساب المفتوح
+  const [waDate, setWaDate] = useState("");
+  const [waTime, setWaTime] = useState("");
+
+  const metric = (fn) => rows.filter(fn).length;
+  const cards = [
+    { label: "مراجعات اليوم",  value: metric((r) => r.date === "2026-08-12" && r.status === "pending"), icon: "fa-calendar-day",   c: "text-purple-600 bg-purple-100" },
+    { label: "هذا الأسبوع",    value: metric((r) => r.status === "pending"),                              icon: "fa-calendar-week",    c: "text-info bg-blue-100" },
+    { label: "هذا الشهر",      value: metric((r) => r.status === "pending" || r.status === "done"),       icon: "fa-calendar",         c: "text-teal bg-teal-100" },
+    { label: "متأخرة",         value: metric((r) => r.status === "overdue"),                              icon: "fa-triangle-exclamation", c: "text-danger bg-red-100" },
+  ];
+
+  const markDone = (id) => setRows(rows.map((r) => (r.id === id ? { ...r, status: "done" } : r)));
+  const stBadge = (s) => s === "done" ? <Badge color="green">تم</Badge>
+    : s === "overdue" ? <Badge color="red">متأخرة</Badge> : <Badge color="orange">قيد الانتظار</Badge>;
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        {cards.map((c) => (
+          <Card key={c.label} className="flex items-center gap-4 p-5">
+            <span className={`flex h-12 w-12 items-center justify-center rounded-xl2 ${c.c}`}><i className={`fa-solid ${c.icon} text-xl`} /></span>
+            <div><div className="text-2xl font-black text-primary">{c.value}</div><div className="text-sm font-bold text-gray-500">{c.label}</div></div>
+          </Card>
+        ))}
+      </div>
+
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr><th className="th">التاريخ</th><th className="th">الوقت</th><th className="th">اسم المريض</th>
+                <th className="th">الجوال</th><th className="th">الحالة</th><th className="th">ملاحظات</th><th className="th">إجراءات</th></tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {rows.length === 0 && <EmptyRow span={7} />}
+              {rows.map((r) => (
+                <tr key={r.id} className="hover:bg-accent-soft/40">
+                  <td className="td font-bold">{fmtDate(r.date)}</td>
+                  <td className="td" dir="ltr">{r.time}</td>
+                  <td className="td font-bold text-gray-800">{p(r.patientId)?.name}</td>
+                  <td className="td" dir="ltr">{p(r.patientId)?.phone1}</td>
+                  <td className="td">{stBadge(r.status)}</td>
+                  <td className="td max-w-40 truncate text-gray-500">{r.notes || "—"}</td>
+                  <td className="td">
+                    <div className="flex gap-1">
+                      <button title="إرسال تذكير واتساب" className="icon-btn text-success hover:bg-success hover:text-white"
+                        onClick={() => { setWa(r); setWaDate(r.date); setWaTime(r.time); }}>
+                        <i className="fa-brands fa-whatsapp text-base" />
+                      </button>
+                      <button title="تحديد كمكتمل" className="icon-btn text-info hover:bg-info hover:text-white"
+                        onClick={() => markDone(r.id)} disabled={r.status === "done"}>
+                        <i className="fa-solid fa-check" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {/* نافذة إرسال واتساب */}
+      {wa && (
+        <Modal open onClose={() => setWa(null)} title="إرسال تذكير واتساب">
+          <div className="space-y-4">
+            <div className="rounded-lg bg-emerald-50 p-3 text-sm font-bold text-success">
+              <i className="fa-brands fa-whatsapp ml-2" />سيتم إرسال رسالة تذكير إلى: {p(wa.patientId)?.name}
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="تاريخ الموعد"><Input type="date" value={waDate} onChange={(e) => setWaDate(e.target.value)} /></Field>
+              <Field label="وقت الموعد"><Input type="time" value={waTime} onChange={(e) => setWaTime(e.target.value)} /></Field>
+            </div>
+            <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
+              <button onClick={() => setWa(null)} className="btn-outline-danger">إلغاء</button>
+              <button className="btn-green" onClick={() => {
+                openWhatsApp({ phone: p(wa.patientId)?.phone1, name: p(wa.patientId)?.name, date: waDate, time: waTime });
+                setWa(null);
+              }}>
+                <i className="fa-brands fa-whatsapp" /> توليد الرسالة وإرسالها
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
+    </div>
+  );
+}
+```
+
+### `pages/Examiners.jsx`
+
+```jsx
+"use client";
+import React, { useState } from "react";
+import { Card, Toggle, Badge, Modal, Field, Input, Select, EmptyRow } from "@/components/ui";
+import { seedExaminers } from "@/lib/data";
+
+export default function Examiners() {
+  const [list, setList] = useState(seedExaminers);
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState({ name: "", phone: "", role: "أخصائي بصريات" });
+
+  return (
+    <div className="space-y-5">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-black text-primary">الفاحصون والكادر الطبي</h2>
+        <button onClick={() => setOpen(true)} className="btn-accent"><i className="fa-solid fa-plus" /> إضافة فاحص</button>
+      </div>
+
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr><th className="th">اسم الفاحص</th><th className="th">الجوال</th><th className="th">المسمى الوظيفي</th><th className="th">الحالة</th><th className="th">إجراءات</th></tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {list.length === 0 && <EmptyRow span={5} />}
+              {list.map((x) => (
+                <tr key={x.id} className="hover:bg-accent-soft/40">
+                  <td className="td font-bold text-gray-800"><i className="fa-solid fa-user-doctor ml-2 text-primary" />{x.name}</td>
+                  <td className="td" dir="ltr">{x.phone}</td>
+                  <td className="td"><Badge color="blue">{x.role}</Badge></td>
+                  <td className="td">
+                    <div className="flex items-center gap-2">
+                      <Toggle on={x.active} onChange={(v) => setList(list.map((i) => i.id === x.id ? { ...i, active: v } : i))} />
+                      <span className={`text-xs font-bold ${x.active ? "text-success" : "text-gray-400"}`}>{x.active ? "نشط" : "موقوف"}</span>
+                    </div>
+                  </td>
+                  <td className="td">
+                    <div className="flex gap-1">
+                      <button className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-pen" /></button>
+                      <button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => setList(list.filter((i) => i.id !== x.id))}>
+                        <i className="fa-solid fa-trash" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {open && (
+        <Modal open onClose={() => setOpen(false)} title="إضافة فاحص جديد">
+          <form className="space-y-4" onSubmit={(e) => {
+            e.preventDefault();
+            if (!f.name) return;
+            setList([...list, { id: Date.now(), ...f, active: true }]);
+            setOpen(false); setF({ name: "", phone: "", role: "أخصائي بصريات" });
+          }}>
+            <Field label="اسم الفاحص" required><Input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></Field>
+            <Field label="رقم الجوال"><Input dir="ltr" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} /></Field>
+            <Field label="المسمى الوظيفي">
+              <Select value={f.role} onChange={(e) => setF({ ...f, role: e.target.value })}>
+                <option>أخصائي بصريات</option><option>طبيب عيون</option><option>فني بصريات</option>
+              </Select>
+            </Field>
+            <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
+              <button type="button" onClick={() => setOpen(false)} className="btn-outline-danger">إلغاء</button>
+              <button type="submit" className="btn-accent"><i className="fa-solid fa-floppy-disk" /> حفظ</button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </div>
+  );
+}
+```
+
+### `pages/Invoices.jsx` (فلاتر + POS)
+
+```jsx
+"use client";
+import React, { useState, useMemo } from "react";
+import { Card, Badge, Input, Select, Field, Modal, EmptyRow } from "@/components/ui";
+import { seedInvoices, seedPatients, seedProducts } from "@/lib/data";
+import { fmtMoney, fmtDate, payAr } from "@/lib/utils";
+
+const pName = (id) => seedPatients.find((p) => p.id === id)?.name || "عميل نقدي";
+
+export default function Invoices() {
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("all");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [pos, setPos] = useState(false);
+
+  const filtered = useMemo(() => seedInvoices.filter((i) => {
+    if (status !== "all" && i.status !== status) return false;
+    if (from && i.date < from) return false;
+    if (to && i.date > to) return false;
+    if (query && !pName(i.patientId).includes(query) && !i.no.includes(query)) return false;
+    return true;
+  }), [query, status, from, to]);
+
+  const stBadge = (s) => s === "paid" ? <Badge color="green">مدفوعة</Badge>
+    : s === "partial" ? <Badge color="orange">جزئي</Badge> : <Badge color="red">غير مدفوعة</Badge>;
+
+  return (
+    <div className="space-y-5">
+      {/* شريط الفلاتر */}
+      <Card className="flex flex-wrap items-end gap-4 p-4">
+        <Field label="من تاريخ"><Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></Field>
+        <Field label="إلى تاريخ"><Input type="date" value={to} onChange={(e) => setTo(e.target.value)} /></Field>
+        <Field label="بحث"><Input placeholder="رقم الفاتورة أو اسم المريض" value={query} onChange={(e) => setQuery(e.target.value)} /></Field>
+        <Field label="حالة الدفع">
+          <Select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="all">الكل</option><option value="paid">نقدي / مدفوع</option>
+            <option value="partial">أقساط / جزئي</option><option value="unpaid">غير مدفوع</option>
+          </Select>
+        </Field>
+        <button onClick={() => setPos(true)} className="btn-accent mr-auto"><i className="fa-solid fa-plus" /> فاتورة جديدة (POS)</button>
+      </Card>
+
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr><th className="th">رقم الفاتورة</th><th className="th">التاريخ</th><th className="th">المريض</th>
+                <th className="th">الإجمالي</th><th className="th">المدفوع</th><th className="th">المتبقي</th>
+                <th className="th">طريقة الدفع</th><th className="th">إجراءات</th></tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {filtered.length === 0 && <EmptyRow span={8} />}
+              {filtered.map((i) => {
+                const rem = i.total - i.paid;
+                return (
+                  <tr key={i.id} className="hover:bg-accent-soft/40">
+                    <td className="td font-bold"><Badge color="yellow">{i.no}</Badge></td>
+                    <td className="td text-gray-500">{fmtDate(i.date)}</td>
+                    <td className="td font-bold text-gray-800">{pName(i.patientId)}</td>
+                    <td className="td">{fmtMoney(i.total)}</td>
+                    <td className="td font-bold text-success">{fmtMoney(i.paid)}</td>
+                    <td className={`td font-bold ${rem > 0 ? "text-danger" : "text-gray-400"}`}>{fmtMoney(rem)}</td>
+                    <td className="td">{payAr[i.method]}</td>
+                    <td className="td">
+                      <div className="flex gap-1">
+                        <button title="طباعة" className="icon-btn text-primary hover:bg-primary hover:text-white"><i className="fa-solid fa-print" /></button>
+                        <button title="عرض" className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-eye" /></button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {pos && <PosModal onClose={() => setPos(false)} />}
+    </div>
+  );
+}
+
+// ------------------------------------------------------------
+// شاشة إنشاء فاتورة (نقطة بيع مبسطة)
+// ------------------------------------------------------------
+function PosModal({ onClose }) {
+  const [items, setItems] = useState([]);
+  const [productId, setProductId] = useState("");
+  const [qty, setQty] = useState(1);
+  const [discount, setDiscount] = useState(0);
+  const [paid, setPaid] = useState(0);
+
+  const addItem = () => {
+    const prod = seedProducts.find((p) => p.id === Number(productId));
+    if (!prod) return;
+    setItems([...items, { id: Date.now(), name: prod.name, price: prod.sell, qty: Number(qty) }]);
+    setProductId(""); setQty(1);
+  };
+
+  const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
+  const total = Math.max(0, subtotal - Number(discount || 0));
+  const remaining = Math.max(0, total - Number(paid || 0));
+
+  return (
+    <Modal open onClose={onClose} wide title="إنشاء فاتورة جديدة — نقطة البيع">
+      <div className="space-y-5">
+        <div className="flex items-end gap-3">
+          <div className="flex-1">
+            <Field label="المنتج / الخدمة">
+              <Select value={productId} onChange={(e) => setProductId(e.target.value)}>
+                <option value="">— اختر منتجاً —</option>
+                {seedProducts.map((p) => <option key={p.id} value={p.id}>{p.name} — {fmtMoney(p.sell)}</option>)}
+              </Select>
+            </Field>
+          </div>
+          <Field label="الكمية"><Input type="number" min="1" className="w-24" value={qty} onChange={(e) => setQty(e.target.value)} /></Field>
+          <button onClick={addItem} className="btn-accent mb-0.5"><i className="fa-solid fa-plus" /> إضافة</button>
+        </div>
+
+        <table className="w-full overflow-hidden rounded-xl2 border border-gray-100">
+          <thead className="bg-gray-50"><tr><th className="th">الصنف</th><th className="th">السعر</th><th className="th">الكمية</th><th className="th">الإجمالي</th><th className="th"></th></tr></thead>
+          <tbody className="divide-y divide-gray-50">
+            {items.length === 0 && <EmptyRow span={5} text="لم تتم إضافة أصناف بعد" />}
+            {items.map((i) => (
+              <tr key={i.id}>
+                <td className="td font-bold">{i.name}</td><td className="td">{fmtMoney(i.price)}</td>
+                <td className="td">{i.qty}</td><td className="td font-bold">{fmtMoney(i.price * i.qty)}</td>
+                <td className="td"><button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => setItems(items.filter((x) => x.id !== i.id))}><i className="fa-solid fa-trash" /></button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <Field label="الخصم"><Input dir="ltr" type="number" min="0" value={discount} onChange={(e) => setDiscount(e.target.value)} /></Field>
+          <Field label="المبلغ المدفوع"><Input dir="ltr" type="number" min="0" value={paid} onChange={(e) => setPaid(e.target.value)} /></Field>
+          <div className="space-y-2 rounded-xl2 bg-primary p-4 text-white">
+            <div className="flex justify-between text-sm"><span>الإجمالي الفرعي</span><b>{fmtMoney(subtotal)}</b></div>
+            <div className="flex justify-between text-sm"><span>الإجمالي النهائي</span><b className="text-accent">{fmtMoney(total)}</b></div>
+            <div className="flex justify-between text-sm"><span>المتبقي</span><b className={remaining > 0 ? "text-red-300" : "text-emerald-300"}>{fmtMoney(remaining)}</b></div>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
+          <button onClick={onClose} className="btn-outline-danger">إلغاء</button>
+          <button onClick={() => { alert("تم حفظ الفاتورة بنجاح ✅"); onClose(); }} className="btn-accent"><i className="fa-solid fa-floppy-disk" /> حفظ الفاتورة</button>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+```
+
+### `pages/Products.jsx`
+
+```jsx
+"use client";
+import React, { useState } from "react";
+import { Card, Badge, Modal, Field, Input, Select, EmptyRow } from "@/components/ui";
+import { seedProducts, catAr } from "@/lib/data";
+import { fmtMoney } from "@/lib/utils";
+
+export default function Products() {
+  const [list, setList] = useState(seedProducts);
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState({ name: "", barcode: "", cat: "lenses", buy: "", sell: "", qty: "", min: 5, notes: "" });
+
+  const low = list.filter((p) => p.qty <= p.min);
+  const lowValue = low.reduce((s, p) => s + p.buy * p.qty, 0);
+  const stockValue = list.reduce((s, p) => s + p.buy * p.qty, 0);
+
+  const cards = [
+    { label: "عدد المنتجات", value: list.length, icon: "fa-boxes-stacked", c: "bg-purple-100 text-purple-600" },
+    { label: "قيمة المنتجات المنخفضة", value: fmtMoney(lowValue), icon: "fa-triangle-exclamation", c: "bg-red-100 text-danger" },
+    { label: "إجمالي قيمة المخزون", value: fmtMoney(stockValue), icon: "fa-vault", c: "bg-emerald-100 text-success" },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        {cards.map((c) => (
+          <Card key={c.label} className="flex items-center gap-4 p-5">
+            <span className={`flex h-12 w-12 items-center justify-center rounded-xl2 ${c.c}`}><i className={`fa-solid ${c.icon} text-xl`} /></span>
+            <div><div className="text-xl font-black text-primary">{c.value}</div><div className="text-sm font-bold text-gray-500">{c.label}</div></div>
+          </Card>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-black text-primary">المنتجات والمخزون</h2>
+        <button onClick={() => setOpen(true)} className="btn-accent"><i className="fa-solid fa-plus" /> إضافة منتج</button>
+      </div>
+
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr><th className="th">اسم المنتج</th><th className="th">التصنيف</th><th className="th">سعر الشراء</th>
+                <th className="th">سعر البيع</th><th className="th">الكمية</th><th className="th">حد التنبيه</th><th className="th">إجراءات</th></tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {list.length === 0 && <EmptyRow span={7} />}
+              {list.map((p) => (
+                <tr key={p.id} className="hover:bg-accent-soft/40">
+                  <td className="td font-bold text-gray-800">{p.name}<div className="text-[10px] text-gray-400" dir="ltr">{p.barcode}</div></td>
+                  <td className="td"><Badge color="blue">{catAr[p.cat]}</Badge></td>
+                  <td className="td">{fmtMoney(p.buy)}</td>
+                  <td className="td font-bold text-success">{fmtMoney(p.sell)}</td>
+                  <td className="td">
+                    <Badge color={p.qty <= p.min ? "red" : "green"}>
+                      {p.qty <= p.min && <i className="fa-solid fa-triangle-exclamation" />} {p.qty}
+                    </Badge>
+                  </td>
+                  <td className="td text-gray-500">{p.min}</td>
+                  <td className="td">
+                    <div className="flex gap-1">
+                      <button className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-pen" /></button>
+                      <button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => setList(list.filter((x) => x.id !== p.id))}><i className="fa-solid fa-trash" /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {open && (
+        <Modal open onClose={() => setOpen(false)} title="إضافة منتج جديد">
+          <form className="space-y-4" onSubmit={(e) => {
+            e.preventDefault();
+            if (!f.name) return;
+            setList([...list, { id: Date.now(), name: f.name, barcode: f.barcode, cat: f.cat, buy: +f.buy || 0, sell: +f.sell || 0, qty: +f.qty || 0, min: +f.min || 5, notes: f.notes }]);
+            setOpen(false);
+          }}>
+            <Field label="اسم المنتج" required><Input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></Field>
+            <div className="grid grid-cols-2 gap-4">
+              <Field label="الباركود"><Input dir="ltr" value={f.barcode} onChange={(e) => setF({ ...f, barcode: e.target.value })} /></Field>
+              <Field label="التصنيف">
+                <Select value={f.cat} onChange={(e) => setF({ ...f, cat: e.target.value })}>
+                  <option value="lenses">عدسات</option><option value="frames">إطارات</option>
+                  <option value="medical_glasses">نظارات طبية</option><option value="accessories">إكسسوارات</option><option value="other">أخرى</option>
+                </Select>
+              </Field>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <Field label="سعر الشراء"><Input dir="ltr" type="number" min="0" value={f.buy} onChange={(e) => setF({ ...f, buy: e.target.value })} /></Field>
+              <Field label="سعر البيع"><Input dir="ltr" type="number" min="0" value={f.sell} onChange={(e) => setF({ ...f, sell: e.target.value })} /></Field>
+              <Field label="الكمية"><Input dir="ltr" type="number" min="0" value={f.qty} onChange={(e) => setF({ ...f, qty: e.target.value })} /></Field>
+            </div>
+            <Field label="حد التنبيه (الحد الأدنى للمخزون)"><Input dir="ltr" type="number" min="0" value={f.min} onChange={(e) => setF({ ...f, min: e.target.value })} /></Field>
+            <Field label="ملاحظات"><textarea className="input min-h-16" value={f.notes} onChange={(e) => setF({ ...f, notes: e.target.value })} /></Field>
+            <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
+              <button type="button" onClick={() => setOpen(false)} className="btn-outline-danger">إلغاء</button>
+              <button type="submit" className="btn-accent"><i className="fa-solid fa-floppy-disk" /> حفظ</button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </div>
+  );
+}
+```
+
+### `pages/Reports.jsx`
+
+```jsx
+"use client";
+import React, { useState } from "react";
+import { Card, Field, Input } from "@/components/ui";
+import { seedInvoices, seedExams, seedPatients } from "@/lib/data";
+import { fmtMoney, fmtDate } from "@/lib/utils";
+
+export default function Reports() {
+  const [from, setFrom] = useState("2026-08-01");
+  const [to, setTo] = useState("2026-08-12");
+
+  const inv = seedInvoices.filter((i) => i.date >= from && i.date <= to);
+  const ex = seedExams.filter((e) => e.date >= from && e.date <= to);
+  const totalRev = inv.reduce((s, i) => s + i.total, 0) + ex.reduce((s, e) => s + e.price, 0);
+  const totalPaid = inv.reduce((s, i) => s + i.paid, 0);
+
+  const exportCsv = () => {
+    const rows = [["رقم الفاتورة","التاريخ","الإجمالي","المدفوع"], ...inv.map((i) => [i.no, i.date, i.total, i.paid])];
+    const csv = "\uFEFF" + rows.map((r) => r.join(",")).join("\n"); // BOM لدعم العربية في Excel
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+    a.download = `report_${from}_${to}.csv`; a.click();
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card className="flex flex-wrap items-end gap-4 p-4">
+        <Field label="من تاريخ"><Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></Field>
+        <Field label="إلى تاريخ"><Input type="date" value={to} onChange={(e) => setTo(e.target.value)} /></Field>
+        <div className="mr-auto flex gap-3">
+          <button onClick={() => window.print()} className="btn-ghost"><i className="fa-solid fa-print" /> طباعة</button>
+          <button onClick={() => window.print()} className="btn-blue"><i className="fa-solid fa-file-pdf" /> PDF</button>
+          <button onClick={exportCsv} className="btn-green"><i className="fa-solid fa-file-excel" /> Excel</button>
+        </div>
+      </Card>
+
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <Card className="p-5 text-center"><div className="text-3xl font-black text-primary">{fmtMoney(totalRev)}</div><div className="mt-1 text-sm font-bold text-gray-500">إجمالي الإيرادات</div></Card>
+        <Card className="p-5 text-center"><div className="text-3xl font-black text-success">{fmtMoney(totalPaid)}</div><div className="mt-1 text-sm font-bold text-gray-500">المبالغ المحصلة</div></Card>
+        <Card className="p-5 text-center"><div className="text-3xl font-black text-info">{ex.length}</div><div className="mt-1 text-sm font-bold text-gray-500">عدد الفحوصات</div></Card>
+      </div>
+
+      <Card>
+        <div className="border-b border-gray-100 px-5 py-4"><h3 className="font-extrabold text-primary"><i className="fa-solid fa-table ml-2 text-accent" />تفاصيل الفترة</h3></div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50"><tr><th className="th">رقم الفاتورة</th><th className="th">التاريخ</th><th className="th">المريض</th><th className="th">الإجمالي</th><th className="th">المدفوع</th><th className="th">المتبقي</th></tr></thead>
+            <tbody className="divide-y divide-gray-50">
+              {inv.map((i) => (
+                <tr key={i.id} className="hover:bg-accent-soft/40">
+                  <td className="td font-bold">{i.no}</td><td className="td">{fmtDate(i.date)}</td>
+                  <td className="td">{seedPatients.find((p) => p.id === i.patientId)?.name || "عميل نقدي"}</td>
+                  <td className="td">{fmtMoney(i.total)}</td><td className="td text-success">{fmtMoney(i.paid)}</td>
+                  <td className="td text-danger">{fmtMoney(i.total - i.paid)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+    </div>
+  );
+}
+```
+
+### `pages/Users.jsx`
+
+```jsx
+"use client";
+import React, { useState } from "react";
+import { Card, Toggle, Badge, EmptyRow } from "@/components/ui";
+import { seedUsers, roleAr } from "@/lib/data";
+
+export default function Users() {
+  const [list, setList] = useState(seedUsers);
+  const roleBadge = (r) => r === "admin" ? <Badge color="yellow">{roleAr[r]}</Badge>
+    : r === "accountant" ? <Badge color="blue">{roleAr[r]}</Badge> : <Badge color="gray">{roleAr[r]}</Badge>;
+
+  return (
+    <div className="space-y-5">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-black text-primary">المستخدمون والصلاحيات</h2>
+        <button className="btn-accent"><i className="fa-solid fa-plus" /> إضافة مستخدم</button>
+      </div>
+      <Card>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr><th className="th">الاسم الكامل</th><th className="th">اسم المستخدم</th><th className="th">الصلاحية</th><th className="th">الحالة</th><th className="th">إجراءات</th></tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {list.length === 0 && <EmptyRow span={5} />}
+              {list.map((u) => (
+                <tr key={u.id} className="hover:bg-accent-soft/40">
+                  <td className="td font-bold text-gray-800">{u.name}</td>
+                  <td className="td text-gray-500" dir="ltr">{u.username}</td>
+                  <td className="td">{roleBadge(u.role)}</td>
+                  <td className="td">
+                    <div className="flex items-center gap-2">
+                      <Toggle on={u.active} onChange={(v) => setList(list.map((i) => i.id === u.id ? { ...i, active: v } : i))} />
+                      <span className={`text-xs font-bold ${u.active ? "text-success" : "text-gray-400"}`}>{u.active ? "نشط" : "موقوف"}</span>
+                    </div>
+                  </td>
+                  <td className="td">
+                    <div className="flex gap-1">
+                      <button className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-pen" /></button>
+                      <button className="icon-btn text-danger hover:bg-danger hover:text-white"><i className="fa-solid fa-trash" /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+    </div>
+  );
+}
+```
+
+### `pages/Settings.jsx` (تبويبات)
+
+```jsx
+"use client";
+import React, { useState } from "react";
+import { Card, Field, Input } from "@/components/ui";
+
+const TABS = [
+  { id: "clinic", label: "إعدادات العيادة", icon: "fa-hospital" },
+  { id: "wa", label: "قوالب واتساب", icon: "fa-brands fa-whatsapp" },
+  { id: "backup", label: "النسخ الاحتياطي", icon: "fa-database" },
+  { id: "updates", label: "التحديثات", icon: "fa-cloud-arrow-down" },
+];
+
+export default function Settings() {
+  const [tab, setTab] = useState("clinic");
+  const [color, setColor] = useState("#2c1b3d");
+
+  return (
+    <div className="space-y-5">
+      <div className="flex gap-2 rounded-xl2 bg-white p-2 shadow-card">
+        {TABS.map((t) => (
+          <button key={t.id} onClick={() => setTab(t.id)}
+            className={`flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition
+              ${tab === t.id ? "bg-primary text-accent" : "text-gray-500 hover:bg-gray-100"}`}>
+            <i className={`fa-solid ${t.icon}`} /> {t.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === "clinic" && (
+        <Card className="p-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div className="space-y-4 lg:col-span-2">
+              <Field label="اسم العيادة"><Input defaultValue="الناظر" /></Field>
+              <div className="grid grid-cols-2 gap-4">
+                <Field label="رقم الهاتف 1"><Input dir="ltr" defaultValue="0112345678" /></Field>
+                <Field label="رقم الهاتف 2"><Input dir="ltr" placeholder="اختياري" /></Field>
+              </div>
+              <Field label="نص تذييل الفواتير"><textarea className="input min-h-16" defaultValue="شكراً لزيارتكم — نسعد بخدمتكم" /></Field>
+              <Field label="اللون الأساسي للنظام">
+                <div className="flex items-center gap-3">
+                  <input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="h-11 w-16 cursor-pointer rounded-lg border border-gray-300" />
+                  <Input dir="ltr" value={color} onChange={(e) => setColor(e.target.value)} className="w-32" />
+                  <span className="h-8 w-8 rounded-lg" style={{ background: color }} />
+                </div>
+              </Field>
+            </div>
+            <div className="space-y-4">
+              <Field label="شعار العيادة">
+                <label className="flex h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl2 border-2 border-dashed border-gray-300 text-gray-400 transition hover:border-accent hover:text-accent">
+                  <i className="fa-solid fa-cloud-arrow-up text-2xl" /><span className="text-xs font-bold">اضغط لرفع الشعار</span>
+                  <input type="file" accept="image/*" className="hidden" />
+                </label>
+              </Field>
+              <div className="rounded-xl2 border border-gray-100 p-4 text-center">
+                <div className="mx-auto grid h-32 w-32 grid-cols-8 gap-0.5 rounded-lg border border-gray-200 p-2">
+                  {Array.from({ length: 64 }).map((_, i) => (
+                    <span key={i} className={`rounded-[1px] ${Math.random() > 0.5 ? "bg-primary" : "bg-white"}`} />
+                  ))}
+                </div>
+                <p className="mt-2 text-[11px] text-gray-400">رمز QR للعيادة (توليد تلقائي)</p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 flex justify-end gap-3 border-t border-gray-100 pt-4">
+            <button className="btn-outline-danger">إلغاء</button>
+            <button className="btn-accent"><i className="fa-solid fa-floppy-disk" /> حفظ الإعدادات</button>
+          </div>
+        </Card>
+      )}
+
+      {tab === "wa" && (
+        <Card className="p-6">
+          <Field label="قالب تذكير المراجعة — المتغيرات: {name} {date} {time} {clinic}">
+            <textarea className="input min-h-32" defaultValue={"مرحباً {name} 👋\nنذكركم بموعد المراجعة في عيادة {clinic} بتاريخ {date} الساعة {time}."} />
+          </Field>
+          <div className="mt-4 flex justify-end"><button className="btn-accent"><i className="fa-solid fa-floppy-disk" /> حفظ القالب</button></div>
+        </Card>
+      )}
+
+      {tab === "backup" && (
+        <Card className="p-6">
+          <div className="flex items-center justify-between rounded-xl2 border border-gray-100 p-4">
+            <div><div className="font-extrabold text-primary">آخر نسخة احتياطية</div><div className="text-sm text-gray-500">اليوم — 03:00 صباحاً (تلقائي)</div></div>
+            <div className="flex gap-3">
+              <button className="btn-blue"><i className="fa-solid fa-download" /> تنزيل نسخة</button>
+              <button className="btn-accent"><i className="fa-solid fa-upload" /> رفع نسخة</button>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {tab === "updates" && (
+        <Card className="p-6 text-center">
+          <i className="fa-solid fa-circle-check mb-3 text-4xl text-success" />
+          <div className="text-lg font-extrabold text-primary">النظام محدّث — الإصدار 1.0.0</div>
+          <p className="mt-1 text-sm text-gray-500">آخر تحقق من التحديثات: اليوم</p>
+          <button className="btn-accent mt-4"><i className="fa-solid fa-rotate" /> التحقق من التحديثات</button>
+        </Card>
+      )}
+    </div>
+  );
+}
+```
+
+---
+
+## Part 11 — Running & Production Notes
+
+**Run locally:**
+```bash
+npm install
+npm run dev        # http://localhost:3000
+```
+Login with any credentials (demo) → click **تسجيل الدخول**.
+
+**Key engineering decisions:**
+
+| Area | Implementation |
+|---|---|
+| **RTL** | `dir="rtl"` on `<html>`, `mr-64` pushes content left of the fixed **right** sidebar, icons positioned with `right-*` inside inputs |
+| **Exam grid state** | `useReducer` with deep-path action `{type:"rx", section, eye, field, value}` + input validation (SPH/CYL decimals, AXIS clamped 0–180) |
+| **WhatsApp** | `buildWhatsApp()` builds `wa.me` deep-link with template interpolation — swap with a backend call to **WhatsApp Cloud API / Twilio** in production |
+| **PDF/Print** | `printPrescription()` opens a styled print window (browser "Save as PDF"). For server-side PDF use `@react-pdf/renderer` or Puppeteer |
+| **Money/Computed** | `remaining` is a Postgres `GENERATED ALWAYS AS` column; `payment_status` should be kept in sync via trigger |
+
+**Suggested next steps for full production:**
+1. Replace mock data with **API routes** (`/api/patients`, `/api/exams`) using Prisma + the schema above.
+2. Add **NextAuth** for real authentication + role-based route guards.
+3. Postgres trigger to auto-create a `followups` row whenever `exams.review_date` is set.
+4. Real QR generation (`qrcode.react`) and file uploads (S3/local storage).
+
+The app is fully navigable end-to-end: Login → Dashboard → Patients → Patient File → **Eye Exam Form** (Distance/Near, OD/OS, SPH/CYL/AXIS) → Print Prescription / WhatsApp reminder. Let me know if you'd like me to wire up the Prisma models or the backend API routes next, يا أبا حسين.
+
+### USER
+كيف احمل المشروع
+
+### ASSISTANT
