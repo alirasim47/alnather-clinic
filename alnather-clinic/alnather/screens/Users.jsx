@@ -22,11 +22,18 @@ export default function Users() {
 
   const openAdd = () => { setEditing(null); setForm(EMPTY_FORM); setOpen(true); };
   const openEdit = (user) => { setEditing(user); setForm({ name: user.name, username: user.username, role: user.role, active: user.active }); setOpen(true); };
+  const closeModal = () => { setOpen(false); setEditing(null); setForm(EMPTY_FORM); };
 
   const submit = async (e) => {
     e.preventDefault();
-    const cleaned = { ...form, name: form.name.trim(), username: form.username.trim() };
+    const cleaned = { ...form, name: form.name.trim(), username: form.username.trim().toLowerCase() };
     if (!cleaned.name || !cleaned.username) return;
+
+    const duplicate = list.find((u) => u.username === cleaned.username && u.id !== (editing ? editing.id : null));
+    if (duplicate) {
+      window.alert(`اسم المستخدم "${cleaned.username}" مستخدم بالفعل! اختر اسماً آخر.`);
+      return;
+    }
 
     if (editing) {
       const payload = { ...editing, ...cleaned };
@@ -37,11 +44,29 @@ export default function Users() {
       const result = await saveSingleItem("users", payload);
       if (result) setList((current) => [...current, payload]);
     }
-    setOpen(false); setEditing(null); setForm(EMPTY_FORM);
+    closeModal();
+  };
+
+  const toggleActive = async (user, v) => {
+    const payload = { ...user, active: v };
+    const result = await saveSingleItem("users", payload);
+    if (result) {
+      setList((current) => current.map((i) => (i.id === user.id ? payload : i)));
+    }
+  };
+
+  const removeUser = async (user) => {
+    if (String(user.username || "").toLowerCase() === "admin") {
+      window.alert("لا يمكن حذف حساب المدير الرئيسي (admin) لحماية النظام!");
+      return;
+    }
+    if (!window.confirm(`هل أنت متأكد من حذف المستخدم "${user.name}"؟ لا يمكن التراجع!`)) return;
+    const result = await deleteSingleItem("users", user.id);
+    if (result !== null) setList((current) => current.filter((i) => i.id !== user.id));
   };
 
   const roleBadge = (r) => r === "admin" ? <Badge color="yellow">{roleAr[r]}</Badge>
-    : r === "accountant" ? <Badge color="blue">{roleAr[r]}</Badge> : <Badge color="gray">{roleAr[r]}</Badge>;
+    : r === "accountant" ? <Badge color="blue">{roleAr[r]}</Badge> : <Badge color="gray">{roleAr[r] || r}</Badge>;
 
   return (
     <div className="space-y-5">
@@ -64,17 +89,14 @@ export default function Users() {
                   <td className="td">{roleBadge(u.role)}</td>
                   <td className="td">
                     <div className="flex items-center gap-2">
-                      <Toggle on={u.active} onChange={(v) => setList((current) => current.map((i) => i.id === u.id ? { ...i, active: v } : i))} />
+                      <Toggle on={u.active} onChange={(v) => toggleActive(u, v)} />
                       <span className={`text-xs font-bold ${u.active ? "text-success" : "text-gray-400"}`}>{u.active ? "نشط" : "موقوف"}</span>
                     </div>
                   </td>
                   <td className="td">
                     <div className="flex gap-1">
                       <button onClick={() => openEdit(u)} className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-pen" /></button>
-                      <button onClick={async () => {
-                        const result = await deleteSingleItem("users", u.id);
-                        if (result !== null) setList((current) => current.filter((i) => i.id !== u.id));
-                      }} className="icon-btn text-danger hover:bg-danger hover:text-white"><i className="fa-solid fa-trash" /></button>
+                      <button onClick={() => removeUser(u)} className="icon-btn text-danger hover:bg-danger hover:text-white"><i className="fa-solid fa-trash" /></button>
                     </div>
                   </td>
                 </tr>
@@ -85,19 +107,20 @@ export default function Users() {
       </Card>
 
       {open && (
-        <Modal open onClose={() => { setOpen(false); setEditing(null); setForm(EMPTY_FORM); }} title={editing ? "تعديل مستخدم" : "إضافة مستخدم جديد"}>
+        <Modal open onClose={closeModal} title={editing ? "تعديل مستخدم" : "إضافة مستخدم جديد"}>
           <form onSubmit={submit} className="space-y-4">
             <Field label="الاسم الكامل" required>
               <Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
             </Field>
             <Field label="اسم المستخدم" required>
-              <Input required value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} />
+              <Input required dir="ltr" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} />
             </Field>
             <Field label="الصلاحية">
               <Select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
                 <option value="admin">مدير النظام</option>
                 <option value="accountant">محاسب</option>
                 <option value="receptionist">موظف استقبال</option>
+                <option value="examiner">فاحص</option>
               </Select>
             </Field>
             <div className="flex items-center justify-between rounded-lg border border-gray-200 px-3 py-2">
@@ -105,7 +128,7 @@ export default function Users() {
               <Toggle on={form.active} onChange={(v) => setForm({ ...form, active: v })} />
             </div>
             <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
-              <button type="button" onClick={() => { setOpen(false); setEditing(null); setForm(EMPTY_FORM); }} className="btn-outline-danger">إلغاء</button>
+              <button type="button" onClick={closeModal} className="btn-outline-danger">إلغاء</button>
               <button type="submit" className="btn-accent"><i className="fa-solid fa-floppy-disk" /> {editing ? "حفظ التعديلات" : "حفظ"}</button>
             </div>
           </form>
