@@ -3,29 +3,53 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Card, Badge, Input, Select, Field, Modal, EmptyRow } from "@/components/ui";
 import { seedInvoices, seedPatients, seedProducts, payAr } from "@/lib/data";
 import { readStorage, STORAGE_KEYS, writeStorage } from "@/lib/storage";
-import { fetchCollection, saveSingleItem, deleteSingleItem } from "@/lib/api";
+import { fetchCollection, saveCollection, saveSingleItem, deleteSingleItem } from "@/lib/api";
 import { fmtMoney, fmtDate } from "@/lib/utils";
-
-const pName = (id) => seedPatients.find((p) => p.id === id)?.name || "عميل نقدي";
 
 export default function Invoices() {
   const [rows, setRows] = useState(() => readStorage(STORAGE_KEYS.invoices, seedInvoices));
+  const [patients, setPatients] = useState(seedPatients);
+  const [settings, setSettings] = useState({});
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [pos, setPos] = useState(false);
+  const [viewing, setViewing] = useState(null);
 
   useEffect(() => writeStorage(STORAGE_KEYS.invoices, rows), [rows]);
 
+  useEffect(() => {
+    let ignore = false;
+    const load = async () => {
+      const [loadedPatients, loadedSettings] = await Promise.all([
+        fetchCollection("patients", seedPatients),
+        fetchCollection("settings", {}),
+      ]);
+      if (!ignore) {
+        setPatients(Array.isArray(loadedPatients) ? loadedPatients : seedPatients);
+        setSettings(loadedSettings && typeof loadedSettings === "object" ? loadedSettings : {});
+      }
+    };
+    load();
+    return () => { ignore = true; };
+  }, []);
+
+  const pNameOf = (id) => (id ? patients.find((p) => p.id === id)?.name || "عميل نقدي" : "عميل نقدي");
+  const clinicName = settings.clinicName || "عيادة العلي";
+
   const saveInvoice = async (invoice) => {
-    const saved = await saveSingleItem("invoices", invoice);
-    const next = saved ? [...rows, saved] : [...rows, invoice];
+    const maxNo = rows.reduce((m, r) => Math.max(m, Number(String(r.no || "").replace(/\D/g, "")) || 0), 2000);
+    const final = { ...invoice, no: `INV-${maxNo + 1}` };
+    const saved = await saveSingleItem("invoices", final);
+    const next = [...rows, saved || final];
     setRows(next);
     writeStorage(STORAGE_KEYS.invoices, next);
   };
 
   const removeInvoice = async (id) => {
+    const target = rows.find((r) => r.id === id);
+    if (!window.confirm(`هل أنت متأكد من حذف الفاتورة ${target?.no || ""}؟ لا يمكن التراجع!`)) return;
     const result = await deleteSingleItem("invoices", id);
     const next = result ? result : rows.filter((invoice) => invoice.id !== id);
     setRows(next);
@@ -33,19 +57,21 @@ export default function Invoices() {
   };
 
   const clearInvoices = () => {
+    if (!window.confirm("تحذير خطير: سيتم حذف جميع الفواتير نهائياً! هل أنت متأكد 100%؟")) return;
     setRows(() => {
       writeStorage(STORAGE_KEYS.invoices, []);
       return [];
     });
+    saveCollection("invoices", []);
   };
 
   const filtered = useMemo(() => rows.filter((i) => {
     if (status !== "all" && i.status !== status) return false;
     if (from && i.date < from) return false;
     if (to && i.date > to) return false;
-    if (query && !pName(i.patientId).includes(query) && !i.no.includes(query)) return false;
+    if (query && !pNameOf(i.patientId).includes(query) && !String(i.no || "").includes(query)) return false;
     return true;
-  }), [query, status, from, to]);
+  }), [rows, query, status, from, to, patients]);
 
   const stBadge = (s) => s === "paid" ? <Badge color="green">مدفوعة</Badge>
     : s === "partial" ? <Badge color="orange">جزئي</Badge> : <Badge color="red">غير مدفوعة</Badge>;
@@ -83,28 +109,29 @@ export default function Invoices() {
             <tbody className="divide-y divide-gray-50">
               {filtered.length === 0 && <EmptyRow span={8} />}
               {filtered.map((i) => {
-                const rem = i.total - i.paid;
+                const rem = (i.total || 0) - (i.paid || 0);
                 return (
                   <tr key={i.id} className="hover:bg-accent-soft/40">
                     <td className="td font-bold"><Badge color="yellow">{i.no}</Badge></td>
                     <td className="td text-gray-500">{fmtDate(i.date)}</td>
-                    <td className="td font-bold text-gray-800">{pName(i.patientId)}</td>
+                    <td className="td font-bold text-gray-800">{pNameOf(i.patientId)}</td>
                     <td className="td">{fmtMoney(i.total)}</td>
                     <td className="td font-bold text-success">{fmtMoney(i.paid)}</td>
                     <td className={`td font-bold ${rem > 0 ? "text-danger" : "text-gray-400"}`}>{fmtMoney(rem)}</td>
                     <td className="td">{payAr[i.method]}</td>
                     <td className="td">
                       <div className="flex gap-1">
-                        <button title="طباعة" className="icon-btn text-primary hover:bg-primary hover:text-white"><i className="fa-solid fa-print" /></button>
-                        <button title="عرض" className="icon-btn text-info hover:bg-info hover:text-white"><i className="fa-solid fa-eye" /></button>
-                       <button
-                         title="حذف الفاتورة"
-                         className="icon-btn text-danger hover:bg-danger hover:text-white"
-                         onClick={() => removeInvoice(i.id)}
-                       >
-                         <i className="fa-solid fa-trash" />
-                       </button>
-                     </div>
+                        <button title="طباعة" className="icon-btn text-primary hover:bg-primary hover:text-white"
+                          onClick={() => printInvoice({ invoice: i, patientName: pNameOf(i.patientId), clinicName })}>
+                          <i className="fa-solid fa-print" />
+                        </button>
+                        <button title="عرض" className="icon-btn text-info hover:bg-info hover:text-white" onClick={() => setViewing(i)}>
+                          <i className="fa-solid fa-eye" />
+                        </button>
+                        <button title="حذف الفاتورة" className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => removeInvoice(i.id)}>
+                          <i className="fa-solid fa-trash" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -115,8 +142,78 @@ export default function Invoices() {
       </Card>
 
       {pos && <PosModal onClose={() => setPos(false)} onSave={saveInvoice} />}
+
+      {viewing && (
+        <Modal open onClose={() => setViewing(null)} title={`تفاصيل الفاتورة ${viewing.no}`}>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded-lg bg-gray-50 p-3"><b>المريض:</b> {pNameOf(viewing.patientId)}</div>
+              <div className="rounded-lg bg-gray-50 p-3"><b>التاريخ:</b> {fmtDate(viewing.date)}</div>
+              <div className="rounded-lg bg-gray-50 p-3"><b>طريقة الدفع:</b> {payAr[viewing.method] || viewing.method}</div>
+              <div className="rounded-lg bg-gray-50 p-3">{stBadge(viewing.status)}</div>
+            </div>
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr><th className="th">الصنف</th><th className="th">الكمية</th><th className="th">السعر</th><th className="th">الإجمالي</th></tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {(viewing.items || []).length === 0 && <EmptyRow span={4} text="لا توجد أصناف محفوظة لهذه الفاتورة" />}
+                {(viewing.items || []).map((it, idx) => (
+                  <tr key={it.id || idx}>
+                    <td className="td font-bold">{it.name}</td>
+                    <td className="td">{it.qty}</td>
+                    <td className="td">{fmtMoney(it.price)}</td>
+                    <td className="td font-bold">{fmtMoney(Number(it.price || 0) * Number(it.qty || 0))}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="flex justify-end gap-6 rounded-xl2 bg-primary p-4 text-sm text-white">
+              <span>الإجمالي: <b className="text-accent">{fmtMoney(viewing.total)}</b></span>
+              <span>المدفوع: <b className="text-emerald-300">{fmtMoney(viewing.paid)}</b></span>
+              <span>المتبقي: <b className="text-red-300">{fmtMoney(Math.max(0, (viewing.total || 0) - (viewing.paid || 0)))}</b></span>
+            </div>
+            <div className="flex justify-end gap-3">
+              <button className="btn-ghost" onClick={() => printInvoice({ invoice: viewing, patientName: pNameOf(viewing.patientId), clinicName })}>
+                <i className="fa-solid fa-print" /> طباعة
+              </button>
+              <button className="btn-accent" onClick={() => setViewing(null)}>إغلاق</button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
+}
+
+function printInvoice({ invoice, patientName, clinicName }) {
+  const rowsHtml = (invoice.items || []).map((it, idx) => `
+    <tr><td>${idx + 1}</td><td>${it.name}</td><td>${it.qty}</td><td>${fmtMoney(it.price)}</td><td>${fmtMoney(Number(it.price || 0) * Number(it.qty || 0))}</td></tr>`).join("");
+  const html = `<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>فاتورة ${invoice.no}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>*{box-sizing:border-box;font-family:Tajawal,sans-serif}body{margin:24px;color:#1f2937}
+  .head{display:flex;justify-content:space-between;border-bottom:3px solid #2c1b3d;padding-bottom:10px}
+  h1{font-size:20px;color:#2c1b3d;margin:0}
+  table{width:100%;border-collapse:collapse;margin-top:14px}
+  th,td{border:1px solid #d1d5db;padding:8px;text-align:center;font-size:13px}
+  th{background:#2c1b3d;color:#fff}
+  .tot{margin-top:14px;font-size:14px}
+  .foot{margin-top:26px;font-size:11px;color:#6b7280;text-align:center;border-top:1px dashed #d1d5db;padding-top:8px}
+  </style></head><body>
+  <div class="head"><h1>${clinicName}</h1><div>فاتورة رقم: ${invoice.no}<br>التاريخ: ${invoice.date}</div></div>
+  <p><b>المريض:</b> ${patientName}</p>
+  <table><tr><th>#</th><th>الصنف</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th></tr>${rowsHtml}</table>
+  <div class="tot">
+    <p>الإجمالي: <b>${fmtMoney(invoice.total)}</b></p>
+    <p>المدفوع: <b>${fmtMoney(invoice.paid)}</b></p>
+    <p>المتبقي: <b>${fmtMoney(Math.max(0, (invoice.total || 0) - (invoice.paid || 0)))}</b></p>
+  </div>
+  <div class="foot">شكراً لثقتكم — ${clinicName}</div>
+  <script>window.onload=()=>setTimeout(()=>window.print(),300)</script>
+  </body></html>`;
+  const w = window.open("", "_blank", "width=800,height=900");
+  w.document.write(html);
+  w.document.close();
 }
 
 function PosModal({ onClose, onSave }) {
@@ -162,6 +259,7 @@ function PosModal({ onClose, onSave }) {
     const price = Number(prod.sell) || 0;
     const nextItem = {
       id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      productId: prod.id,
       name: prod.name,
       price,
       qty: safeQty,
@@ -181,15 +279,29 @@ function PosModal({ onClose, onSave }) {
     if (!canSaveInvoice) return;
     const invoice = {
       id: Date.now(),
-      no: `INV-${Math.floor(2000 + Math.random() * 9999)}`,
       date: new Date().toISOString().slice(0, 10),
       patientId: patientId ? Number(patientId) : 0,
       total,
       paid: Number(paid || 0),
       method,
       status: Number(paid || 0) >= total ? "paid" : Number(paid || 0) > 0 ? "partial" : "unpaid",
+      items,
     };
     await onSave(invoice);
+
+    try {
+      const currentProducts = await fetchCollection("products", seedProducts);
+      if (Array.isArray(currentProducts)) {
+        const updated = currentProducts.map((p) => {
+          const sold = items
+            .filter((it) => String(it.productId) === String(p.id))
+            .reduce((s, it) => s + Number(it.qty || 0), 0);
+          return sold ? { ...p, qty: Math.max(0, (Number(p.qty) || 0) - sold) } : p;
+        });
+        await saveCollection("products", updated);
+      }
+    } catch {}
+
     onClose();
   };
 
