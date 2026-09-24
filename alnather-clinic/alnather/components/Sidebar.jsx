@@ -42,13 +42,13 @@ export default function Sidebar({ page, setPage, onLogout, open, onClose }) {
     <>
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}
 
       <aside
-        className={`fixed inset-y-0 right-0 z-50 flex h-screen w-64 shrink-0 flex-col bg-primary text-white transition-transform duration-200
+        className={`fixed inset-y-0 right-0 z-[60] flex h-screen w-64 shrink-0 flex-col bg-primary text-white transition-transform duration-200
           ${open ? "translate-x-0" : "translate-x-full"}
           lg:sticky lg:top-0 lg:z-40 lg:translate-x-0`}
       >
