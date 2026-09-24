@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ClinicLogo from "./ClinicLogo";
 
 const NAV = [
@@ -18,19 +18,24 @@ const NAV = [
 export default function Sidebar({ page, setPage, onLogout, open, onClose }) {
   return (
     <>
-      {/* الخلفية المعتمة للموبايل فقط */}
+      {/* الخلفية المعتمة - تظهر فقط على الموبايل عند فتح القائمة */}
       {open && (
         <div
-          className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-[50] bg-black/60 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}
 
-      {/* القائمة الجانبية */}
+      {/* 
+        القائمة الجانبية
+        - على الموبايل: fixed + translate (تنزلق فوق المحتوى)
+        - على اللابتوب: static (تعود للتدفق الطبيعي، المحتوى بجانبها)
+        - lg:z-auto يلغي z-index العالي حتى لا تغطي النوافذ
+      */}
       <aside
-        className={`fixed inset-y-0 right-0 z-[70] flex h-screen w-72 shrink-0 flex-col bg-[#2c1b3d] text-white transition-transform duration-300 ease-in-out
+        className={`fixed inset-y-0 right-0 z-[60] flex h-screen w-72 shrink-0 flex-col bg-[#2c1b3d] text-white transition-transform duration-300 ease-in-out
           ${open ? "translate-x-0" : "translate-x-full"}
-          lg:sticky lg:top-0 lg:z-40 lg:translate-x-0`}
+          lg:static lg:z-auto lg:translate-x-0`}
       >
         <div className="flex items-center justify-between border-b border-white/10 px-5 py-5">
           <ClinicLogo compact={false} className="justify-start text-white" />
