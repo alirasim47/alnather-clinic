@@ -17,8 +17,9 @@ export const CardHeader = ({ icon, title, action }) => (
 
 export function Modal({ open, onClose, title, children, wide = false }) {
   if (!open) return null;
+
   return (
-    // z-[9999] يضمن ظهور النافذة فوق القائمة الجانبية تماماً
+    // z-[9999] يضمن ظهور النافذة فوق كل شيء (بما فيه القائمة الجانبية)
     <div className="fixed inset-0 z-[9999] flex items-start justify-center p-3 sm:items-center sm:p-4" dir="rtl">
       <div className="absolute inset-0 bg-[#2c1b3d]/70 backdrop-blur-sm" onClick={onClose} />
       <div
