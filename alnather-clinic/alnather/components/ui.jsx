@@ -1,16 +1,15 @@
 "use client";
-
 import React from "react";
 
 export const Card = ({ className = "", children }) => (
-  <div className={`card ${className}`}>{children}</div>
+  <div className={`rounded-2xl border border-gray-100 bg-white shadow-sm ${className}`}>{children}</div>
 );
 
 export const CardHeader = ({ icon, title, action }) => (
   <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 px-5 py-4">
     <div className="flex items-center gap-2.5">
-      {icon && <span className="text-accent">{icon}</span>}
-      <h3 className="text-base font-extrabold text-primary">{title}</h3>
+      {icon && <span className="text-[#eab308]">{icon}</span>}
+      <h3 className="text-base font-extrabold text-[#2c1b3d]">{title}</h3>
     </div>
     {action}
   </div>
@@ -19,19 +18,22 @@ export const CardHeader = ({ icon, title, action }) => (
 export function Modal({ open, onClose, title, children, wide = false }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[70] flex items-start justify-center p-3 sm:items-center sm:p-4">
-      <div className="absolute inset-0 bg-primary/60 backdrop-blur-sm" onClick={onClose} />
+    // z-[9999] يضمن ظهور النافذة فوق القائمة الجانبية تماماً
+    <div className="fixed inset-0 z-[9999] flex items-start justify-center p-3 sm:items-center sm:p-4" dir="rtl">
+      <div className="absolute inset-0 bg-[#2c1b3d]/70 backdrop-blur-sm" onClick={onClose} />
       <div
-        className={`card relative z-10 w-full max-h-[95vh] overflow-y-auto shadow-pop
+        className={`relative z-10 flex w-full max-h-[95vh] flex-col rounded-2xl bg-white shadow-2xl
           ${wide ? "sm:max-w-4xl" : "sm:max-w-lg"}`}
       >
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white px-4 py-3 rounded-t-xl2 sm:px-6 sm:py-4">
-          <h3 className="truncate pr-2 text-base font-extrabold text-primary sm:text-lg">{title}</h3>
-          <button onClick={onClose} className="icon-btn shrink-0 text-gray-400 hover:text-danger">
+        <div className="sticky top-0 z-20 flex items-center justify-between border-b border-gray-100 bg-white px-4 py-3 rounded-t-2xl sm:px-6 sm:py-4">
+          <h3 className="truncate pr-2 text-base font-extrabold text-[#2c1b3d] sm:text-lg">{title}</h3>
+          <button onClick={onClose} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-gray-400 transition hover:bg-red-50 hover:text-red-500">
             <i className="fa-solid fa-xmark text-lg" />
           </button>
         </div>
-        <div className="p-4 sm:p-6">{children}</div>
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -39,52 +41,44 @@ export function Modal({ open, onClose, title, children, wide = false }) {
 
 export const Field = ({ label, required, children }) => (
   <div className="min-w-0">
-    <label className="field-label">
-      {label}{required && <span className="text-danger">*</span>}
+    <label className="mb-1.5 block text-sm font-bold text-gray-700">
+      {label}{required && <span className="text-red-500">*</span>}
     </label>
     {children}
   </div>
 );
 
-export const Input = ({ icon, ...props }) =>
+export const Input = ({ icon, className = "", ...props }) =>
   icon ? (
     <div className="relative">
-      <input {...props} className={`input ${icon ? "pr-10" : ""}`} />
+      <input {...props} className={`w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm transition focus:border-[#eab308] focus:outline-none focus:ring-2 focus:ring-[#eab308]/30 min-h-[44px] ${icon ? "pr-10" : ""} ${className}`} />
       <i className={`fa-solid ${icon} absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400`} />
     </div>
   ) : (
-    <input {...props} className="input" />
+    <input {...props} className={`w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm transition focus:border-[#eab308] focus:outline-none focus:ring-2 focus:ring-[#eab308]/30 min-h-[44px] ${className}`} />
   );
 
-export const Select = ({ children, ...props }) => (
-  <select {...props} className="input appearance-none cursor-pointer">{children}</select>
-);
-
-export const Toggle = ({ on, onChange }) => (
-  <button
-    type="button"
-    onClick={() => onChange(!on)}
-    className={`relative h-6 w-11 shrink-0 rounded-full transition ${on ? "bg-success" : "bg-gray-300"}`}
-  >
-    <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${on ? "right-0.5" : "right-5"}`} />
-  </button>
+export const Select = ({ children, className = "", ...props }) => (
+  <select {...props} className={`w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm transition focus:border-[#eab308] focus:outline-none focus:ring-2 focus:ring-[#eab308]/30 min-h-[44px] appearance-none cursor-pointer ${className}`}>
+    {children}
+  </select>
 );
 
 export const Badge = ({ color, children }) => {
   const map = {
-    green: "bg-emerald-50 text-success",
-    red: "bg-red-50 text-danger",
-    orange: "bg-orange-50 text-orange-500",
-    blue: "bg-blue-50 text-info",
+    green: "bg-emerald-50 text-emerald-700",
+    red: "bg-red-50 text-red-700",
+    orange: "bg-orange-50 text-orange-700",
+    blue: "bg-blue-50 text-blue-700",
     gray: "bg-gray-100 text-gray-600",
-    yellow: "bg-accent-soft text-yellow-700",
+    yellow: "bg-yellow-50 text-yellow-700",
   };
-  return <span className={`chip ${map[color] || map.gray}`}>{children}</span>;
+  return <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${map[color] || map.gray}`}>{children}</span>;
 };
 
 export const EmptyRow = ({ span, text = "لا توجد بيانات لعرضها" }) => (
   <tr>
-    <td colSpan={span} className="td py-10 text-center text-gray-400">
+    <td colSpan={span} className="py-10 text-center text-sm text-gray-400">
       <i className="fa-regular fa-folder-open ml-2 text-2xl align-middle" />{text}
     </td>
   </tr>
