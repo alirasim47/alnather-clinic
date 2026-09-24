@@ -214,7 +214,7 @@ export default function Patients() {
               <Badge color="yellow">{patients.length} مريض</Badge>
             </div>
             <div className="flex items-center gap-3">
-              <div className="relative w-72">
+              <div className="relative w-full sm:w-72">
                 <Input placeholder="بحث بالاسم أو رقم الجوال..." value={query} onChange={(e) => setQuery(e.target.value)} />
                 <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
               </div>
