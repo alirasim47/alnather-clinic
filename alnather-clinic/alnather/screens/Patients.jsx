@@ -297,7 +297,7 @@ function PatientFormModal({ patient = null, onClose, onSave, title }) {
         </Field>
         <div className="grid grid-cols-2 gap-4">
           <Field label="رقم الجوال 1"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone1} onChange={set("phone1")} /></Field>
-          <Field label="رقم الجوال 2"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone2} onChange={set("phone2") /></Field>
+          <Field label="رقم الجوال 2"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone2} onChange={set("phone2")} /></Field>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <Field label="الجنس">
