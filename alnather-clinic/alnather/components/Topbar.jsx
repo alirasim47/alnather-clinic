@@ -1,11 +1,12 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { longDate } from "@/lib/utils";
 
 const STORAGE_KEY = "clinic-notifications-v1";
 const initialNotifications = [];
 
-export default function Topbar({ title }) {
+export default function Topbar({ title, onMenu }) {
   const [notifications, setNotifications] = useState(() => {
     if (typeof window === "undefined") return initialNotifications;
     try {
@@ -17,17 +18,16 @@ export default function Topbar({ title }) {
       return initialNotifications;
     }
   });
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     if (notifications.length === 0) {
       window.localStorage.removeItem(STORAGE_KEY);
       window.dispatchEvent(new Event("clinic-notifications-updated"));
       return;
     }
-
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(notifications));
     window.dispatchEvent(new Event("clinic-notifications-updated"));
   }, [notifications]);
@@ -36,10 +36,20 @@ export default function Topbar({ title }) {
   const removeNotification = (id) => setNotifications((prev) => prev.filter((item) => item.id !== id));
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-3.5 shadow-sm">
-      <h1 className="text-lg font-extrabold text-primary">{title}</h1>
+    <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-gray-200 bg-white px-4 py-3.5 shadow-sm sm:px-6">
+      <div className="flex min-w-0 items-center gap-3">
+        <button
+          type="button"
+          onClick={onMenu}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-gray-600 transition hover:bg-gray-100 lg:hidden"
+          aria-label="فتح القائمة"
+        >
+          <i className="fa-solid fa-bars text-lg" />
+        </button>
+        <h1 className="truncate text-base font-extrabold text-primary sm:text-lg">{title}</h1>
+      </div>
 
-      <div className="flex items-center gap-5">
+      <div className="flex shrink-0 items-center gap-3 sm:gap-5">
         <span className="hidden items-center gap-2 text-sm text-gray-500 md:flex">
           <i className="fa-regular fa-calendar-days text-accent" />
           {longDate()}
@@ -59,9 +69,8 @@ export default function Topbar({ title }) {
               </span>
             )}
           </button>
-
           {open && (
-            <div className="absolute left-0 top-12 w-[360px] rounded-[20px] border border-gray-200 bg-white p-3 shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
+            <div className="absolute left-0 top-12 w-[92vw] max-w-[360px] rounded-[20px] border border-gray-200 bg-white p-3 shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
               <div className="mb-3 flex items-center justify-between border-b border-gray-100 pb-2.5">
                 <div className="flex items-center gap-2">
                   <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-danger/10 text-danger">
@@ -70,16 +79,11 @@ export default function Topbar({ title }) {
                   <span className="text-sm font-black text-primary">التنبيهات</span>
                 </div>
                 {notifications.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={clearNotifications}
-                    className="text-[11px] font-bold text-danger hover:underline"
-                  >
+                  <button type="button" onClick={clearNotifications} className="text-[11px] font-bold text-danger hover:underline">
                     حذف الكل
                   </button>
                 )}
               </div>
-
               {notifications.length === 0 ? (
                 <div className="flex flex-col items-center justify-center gap-2 py-6 text-center">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-400">
@@ -90,10 +94,7 @@ export default function Topbar({ title }) {
               ) : (
                 <div className="space-y-2">
                   {notifications.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex items-start justify-between gap-2 rounded-xl border border-gray-100 bg-gradient-to-r from-gray-50 to-white p-2.5 text-sm text-gray-700"
-                    >
+                    <div key={item.id} className="flex items-start justify-between gap-2 rounded-xl border border-gray-100 bg-gradient-to-r from-gray-50 to-white p-2.5 text-sm text-gray-700">
                       <div className="flex-1">
                         <div className="font-bold text-gray-800">{item.text}</div>
                         <div className="mt-1 text-[10px] text-gray-400">{item.time}</div>
@@ -114,14 +115,14 @@ export default function Topbar({ title }) {
           )}
         </div>
 
-        <span className="h-8 w-px bg-gray-200" />
+        <span className="hidden h-8 w-px bg-gray-200 sm:block" />
 
         <div className="flex items-center gap-3">
-          <div className="text-left">
+          <div className="hidden text-left sm:block">
             <div className="text-sm font-extrabold leading-none text-gray-800">أبو حسين</div>
             <div className="mt-1 text-[11px] font-bold text-accent">مدير العيادة</div>
           </div>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-purple-700 font-black text-accent ring-2 ring-accent/80">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-purple-700 font-black text-accent ring-2 ring-accent/80">
             أح
           </div>
         </div>
