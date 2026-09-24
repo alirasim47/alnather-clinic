@@ -78,7 +78,7 @@ export default function Invoices() {
 
   return (
     <div className="space-y-5">
-      <Card className="flex flex-wrap items-end gap-4 p-4">
+      <Card className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-4">
         <Field label="من تاريخ"><Input type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></Field>
         <Field label="إلى تاريخ"><Input type="date" value={to} onChange={(e) => setTo(e.target.value)} /></Field>
         <Field label="بحث"><Input placeholder="رقم الفاتورة أو اسم المريض" value={query} onChange={(e) => setQuery(e.target.value)} /></Field>
@@ -88,7 +88,7 @@ export default function Invoices() {
             <option value="partial">أقساط / جزئي</option><option value="unpaid">غير مدفوع</option>
           </Select>
         </Field>
-        <div className="mr-auto flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 lg:col-span-4 lg:justify-end">
           {rows.length > 0 && (
             <button onClick={clearInvoices} className="btn-outline-danger">
               <i className="fa-solid fa-trash" /> حذف الفواتير
