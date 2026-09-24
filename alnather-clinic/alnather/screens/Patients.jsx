@@ -295,11 +295,11 @@ function PatientFormModal({ patient = null, onClose, onSave, title }) {
         <Field label="الاسم الكامل" required>
           <Input required placeholder="أدخل اسم المريض الثلاثي" value={f.name} onChange={set("name")} />
         </Field>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="رقم الجوال 1"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone1} onChange={set("phone1")} /></Field>
           <Field label="رقم الجوال 2"><Input dir="ltr" placeholder="05xxxxxxxx" value={f.phone2} onChange={set("phone2")} /></Field>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="الجنس">
             <div className="flex items-center gap-6 rounded-lg border border-gray-300 px-3 py-2.5">
               <label className="flex cursor-pointer items-center gap-2 text-sm">
