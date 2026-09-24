@@ -146,34 +146,36 @@ export default function Invoices() {
       {viewing && (
         <Modal open onClose={() => setViewing(null)} title={`تفاصيل الفاتورة ${viewing.no}`}>
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3 text-sm">
+            <div className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
               <div className="rounded-lg bg-gray-50 p-3"><b>المريض:</b> {pNameOf(viewing.patientId)}</div>
               <div className="rounded-lg bg-gray-50 p-3"><b>التاريخ:</b> {fmtDate(viewing.date)}</div>
               <div className="rounded-lg bg-gray-50 p-3"><b>طريقة الدفع:</b> {payAr[viewing.method] || viewing.method}</div>
               <div className="rounded-lg bg-gray-50 p-3">{stBadge(viewing.status)}</div>
             </div>
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr><th className="th">الصنف</th><th className="th">الكمية</th><th className="th">السعر</th><th className="th">الإجمالي</th></tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {(viewing.items || []).length === 0 && <EmptyRow span={4} text="لا توجد أصناف محفوظة لهذه الفاتورة" />}
-                {(viewing.items || []).map((it, idx) => (
-                  <tr key={it.id || idx}>
-                    <td className="td font-bold">{it.name}</td>
-                    <td className="td">{it.qty}</td>
-                    <td className="td">{fmtMoney(it.price)}</td>
-                    <td className="td font-bold">{fmtMoney(Number(it.price || 0) * Number(it.qty || 0))}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="flex justify-end gap-6 rounded-xl2 bg-primary p-4 text-sm text-white">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr><th className="th">الصنف</th><th className="th">الكمية</th><th className="th">السعر</th><th className="th">الإجمالي</th></tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {(viewing.items || []).length === 0 && <EmptyRow span={4} text="لا توجد أصناف محفوظة لهذه الفاتورة" />}
+                  {(viewing.items || []).map((it, idx) => (
+                    <tr key={it.id || idx}>
+                      <td className="td font-bold">{it.name}</td>
+                      <td className="td">{it.qty}</td>
+                      <td className="td">{fmtMoney(it.price)}</td>
+                      <td className="td font-bold">{fmtMoney(Number(it.price || 0) * Number(it.qty || 0))}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="flex flex-wrap justify-end gap-3 sm:gap-6 rounded-xl2 bg-primary p-4 text-sm text-white">
               <span>الإجمالي: <b className="text-accent">{fmtMoney(viewing.total)}</b></span>
               <span>المدفوع: <b className="text-emerald-300">{fmtMoney(viewing.paid)}</b></span>
               <span>المتبقي: <b className="text-red-300">{fmtMoney(Math.max(0, (viewing.total || 0) - (viewing.paid || 0)))}</b></span>
             </div>
-            <div className="flex justify-end gap-3">
+            <div className="flex flex-wrap justify-end gap-3">
               <button className="btn-ghost" onClick={() => printInvoice({ invoice: viewing, patientName: pNameOf(viewing.patientId), clinicName })}>
                 <i className="fa-solid fa-print" /> طباعة
               </button>
@@ -308,8 +310,8 @@ function PosModal({ onClose, onSave }) {
   return (
     <Modal open onClose={onClose} wide title="إنشاء فاتورة جديدة — نقطة البيع">
       <div className="space-y-5">
-        <div className="flex items-end gap-3">
-          <div className="flex-1">
+        <div className="flex flex-wrap items-end gap-3">
+          <div className="flex-1 min-w-0">
             <Field label="المنتج / الخدمة">
               <Select value={productId} onChange={(e) => setProductId(e.target.value)} disabled={!hasProducts}>
                 <option value="">{hasProducts ? "— اختر منتجاً —" : "لا توجد منتجات مسجلة"}</option>
@@ -322,23 +324,29 @@ function PosModal({ onClose, onSave }) {
               </div>
             )}
           </div>
-          <Field label="الكمية"><Input type="number" min="1" className="w-24" value={qty} onChange={(e) => setQty(e.target.value)} /></Field>
-          <button type="button" onClick={addItem} disabled={!hasProducts || !productId} className="btn-accent mb-0.5 disabled:cursor-not-allowed disabled:opacity-50"><i className="fa-solid fa-plus" /> إضافة</button>
+          <Field label="الكمية">
+            <Input type="number" min="1" className="w-24" value={qty} onChange={(e) => setQty(e.target.value)} />
+          </Field>
+          <button type="button" onClick={addItem} disabled={!hasProducts || !productId} className="btn-accent mb-0.5 disabled:cursor-not-allowed disabled:opacity-50">
+            <i className="fa-solid fa-plus" /> إضافة
+          </button>
         </div>
 
-        <table className="w-full overflow-hidden rounded-xl2 border border-gray-100">
-          <thead className="bg-gray-50"><tr><th className="th">الصنف</th><th className="th">السعر</th><th className="th">الكمية</th><th className="th">الإجمالي</th><th className="th"></th></tr></thead>
-          <tbody className="divide-y divide-gray-50">
-            {items.length === 0 && <EmptyRow span={5} text="لم تتم إضافة أصناف بعد" />}
-            {items.map((i) => (
-              <tr key={i.id}>
-                <td className="td font-bold">{i.name}</td><td className="td">{fmtMoney(i.price)}</td>
-                <td className="td">{i.qty}</td><td className="td font-bold">{fmtMoney(i.price * i.qty)}</td>
-                <td className="td"><button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => setItems(items.filter((x) => x.id !== i.id))}><i className="fa-solid fa-trash" /></button></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="overflow-x-auto">
+          <table className="w-full overflow-hidden rounded-xl2 border border-gray-100">
+            <thead className="bg-gray-50"><tr><th className="th">الصنف</th><th className="th">السعر</th><th className="th">الكمية</th><th className="th">الإجمالي</th><th className="th"></th></tr></thead>
+            <tbody className="divide-y divide-gray-50">
+              {items.length === 0 && <EmptyRow span={5} text="لم تتم إضافة أصناف بعد" />}
+              {items.map((i) => (
+                <tr key={i.id}>
+                  <td className="td font-bold">{i.name}</td><td className="td">{fmtMoney(i.price)}</td>
+                  <td className="td">{i.qty}</td><td className="td font-bold">{fmtMoney(i.price * i.qty)}</td>
+                  <td className="td"><button className="icon-btn text-danger hover:bg-danger hover:text-white" onClick={() => setItems(items.filter((x) => x.id !== i.id))}><i className="fa-solid fa-trash" /></button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Field label="المريض (اختياري)">
@@ -374,9 +382,11 @@ function PosModal({ onClose, onSave }) {
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 border-t border-gray-100 pt-4">
+        <div className="flex flex-wrap justify-end gap-3 border-t border-gray-100 pt-4">
           <button type="button" onClick={onClose} className="btn-outline-danger">إلغاء</button>
-          <button type="button" onClick={save} disabled={!canSaveInvoice} className="btn-accent disabled:cursor-not-allowed disabled:opacity-50"><i className="fa-solid fa-floppy-disk" /> حفظ الفاتورة</button>
+          <button type="button" onClick={save} disabled={!canSaveInvoice} className="btn-accent disabled:cursor-not-allowed disabled:opacity-50">
+            <i className="fa-solid fa-floppy-disk" /> حفظ الفاتورة
+          </button>
         </div>
       </div>
     </Modal>
