@@ -121,7 +121,7 @@ export default function Followups() {
             <div className="rounded-lg bg-emerald-50 p-3 text-sm font-bold text-success">
               <i className="fa-brands fa-whatsapp ml-2" />سيتم إرسال رسالة تذكير إلى: {pOf(wa.patientId)?.name || "—"}
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="تاريخ الموعد"><Input type="date" value={waDate} onChange={(e) => setWaDate(e.target.value)} /></Field>
               <Field label="وقت الموعد"><Input type="time" value={waTime} onChange={(e) => setWaTime(e.target.value)} /></Field>
             </div>
