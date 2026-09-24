@@ -31,11 +31,11 @@ export default function Shell({ onLogout }) {
 
   const go = (next) => {
     setPage(next);
-    setSidebarOpen(false);
+    setSidebarOpen(false); // إغلاق القائمة عند الانتقال
   };
 
   return (
-    <div className="flex min-h-screen bg-surface">
+    <div className="flex min-h-screen bg-gray-50" dir="rtl">
       <Sidebar
         page={page}
         setPage={go}
@@ -43,9 +43,10 @@ export default function Shell({ onLogout }) {
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
-      <div className="relative z-10 flex min-h-screen min-w-0 flex-1 flex-col">
+      
+      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
         <Topbar title={TITLES[page]} onMenu={() => setSidebarOpen(true)} />
-        <main className="relative z-10 flex-1 p-4 sm:p-6">
+        <main className="relative z-0 flex-1 p-4 sm:p-6">
           {page === "dashboard" && <Dashboard go={go} />}
           {page === "patients" && <Patients />}
           {page === "followups" && <Followups />}
