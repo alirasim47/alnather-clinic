@@ -1,3 +1,18 @@
+// ============================================
+// ثوابت الأشهر والأيام بالعربية
+// ============================================
+const AR_MONTHS = [
+  "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+  "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"
+];
+
+const AR_WEEKDAYS = [
+  "الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"
+];
+
+// ============================================
+// تنسيق المبالغ بالدينار العراقي
+// ============================================
 export const fmtMoney = (n) =>
   new Intl.NumberFormat("ar-IQ", {
     style: "currency",
@@ -6,17 +21,39 @@ export const fmtMoney = (n) =>
     maximumFractionDigits: 0,
   }).format(Number(n) || 0);
 
-export const fmtDate = (d) =>
-  new Date(d).toLocaleDateString("ar-EG", { year: "numeric", month: "short", day: "numeric" });
+// ============================================
+// تنسيق التاريخ — يوم شهر سنة (ثابت بأي متصفح)
+// ============================================
+export const fmtDate = (d) => {
+  const date = new Date(d);
+  if (Number.isNaN(date.getTime())) return "—";
+  return `${date.getDate()} ${AR_MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+};
 
+// ============================================
+// تاريخ اليوم بصيغة ISO (YYYY-MM-DD)
+// ============================================
 export const todayISO = () => new Date().toISOString().slice(0, 10);
 
-export const longDate = () =>
-  new Date().toLocaleDateString("ar-EG", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-  });
+// ============================================
+// التاريخ الطويل — يوم الأسبوع يوم شهر سنة
+// ============================================
+export const longDate = () => {
+  const date = new Date();
+  return `${AR_WEEKDAYS[date.getDay()]} ${date.getDate()} ${AR_MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+};
 
-export function buildWhatsApp({ phone, name, date, time, clinic = "عيادة العلي", countryCode = "964" }) {
+// ============================================
+// بناء رابط واتساب
+// ============================================
+export function buildWhatsApp({
+  phone,
+  name,
+  date,
+  time,
+  clinic = "عيادة العلي",
+  countryCode = "964",
+}) {
   const clean = String(phone || "").replace(/\D/g, "");
   const full = clean.startsWith("0") ? countryCode + clean.slice(1) : clean;
 
@@ -29,8 +66,15 @@ export function buildWhatsApp({ phone, name, date, time, clinic = "عيادة ا
   return `https://wa.me/${full}?text=${encodeURIComponent(template)}`;
 }
 
-export const openWhatsApp = (payload) => window.open(buildWhatsApp(payload), "_blank");
+// ============================================
+// فتح رابط واتساب في نافذة جديدة
+// ============================================
+export const openWhatsApp = (payload) =>
+  window.open(buildWhatsApp(payload), "_blank");
 
+// ============================================
+// طباعة وصفة النظر
+// ============================================
 export function printPrescription({ patient, exam, rx, clinic }) {
   const row = (label, od, os) => `
     <tr>
