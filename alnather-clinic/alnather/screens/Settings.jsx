@@ -226,7 +226,7 @@ export default function Settings() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <div className="space-y-4 lg:col-span-2">
               <Field label="اسم العيادة"><Input value={settings.clinicName} onChange={update("clinicName")} /></Field>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Field label="رقم الهاتف 1"><Input dir="ltr" value={settings.phone1} onChange={update("phone1")} /></Field>
                 <Field label="رقم الهاتف 2"><Input dir="ltr" value={settings.phone2} placeholder="اختياري" onChange={update("phone2")} /></Field>
               </div>
