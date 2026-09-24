@@ -129,7 +129,7 @@ export default function Products() {
         <Modal open onClose={closeModal} title={editing ? "تعديل منتج" : "إضافة منتج جديد"}>
           <form className="space-y-4" onSubmit={submit}>
             <Field label="اسم المنتج" required><Input required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></Field>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="الباركود"><Input dir="ltr" value={f.barcode} onChange={(e) => setF({ ...f, barcode: e.target.value })} /></Field>
               <Field label="التصنيف">
                 <Select value={f.cat} onChange={(e) => setF({ ...f, cat: e.target.value })}>
