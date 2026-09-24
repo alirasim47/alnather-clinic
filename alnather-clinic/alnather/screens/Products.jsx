@@ -7,6 +7,12 @@ import { fmtMoney } from "@/lib/utils";
 
 const EMPTY_FORM = { name: "", barcode: "", cat: "lenses", buy: "", sell: "", qty: "", min: 5, notes: "" };
 
+const toNum = (v) => {
+  if (v === "" || v === null || v === undefined) return 0;
+  const n = Number(v);
+  return Number.isFinite(n) ? Math.max(0, n) : 0;
+};
+
 export default function Products() {
   const [list, setList] = useState(seedProducts);
 
@@ -43,10 +49,10 @@ export default function Products() {
       name: f.name.trim(),
       barcode: f.barcode,
       cat: f.cat,
-      buy: Number(f.buy) || 0,
-      sell: Number(f.sell) || 0,
-      qty: Number(f.qty) || 0,
-      min: Number(f.min) || 5,
+      buy: toNum(f.buy),
+      sell: toNum(f.sell),
+      qty: toNum(f.qty),
+      min: toNum(f.min),
       notes: f.notes,
     };
 
