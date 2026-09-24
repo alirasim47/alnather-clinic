@@ -139,7 +139,7 @@ export default function Products() {
                 </Select>
               </Field>
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <Field label="سعر الشراء"><Input dir="ltr" type="number" min="0" value={f.buy} onChange={(e) => setF({ ...f, buy: e.target.value })} /></Field>
               <Field label="سعر البيع"><Input dir="ltr" type="number" min="0" value={f.sell} onChange={(e) => setF({ ...f, sell: e.target.value })} /></Field>
               <Field label="الكمية"><Input dir="ltr" type="number" min="0" value={f.qty} onChange={(e) => setF({ ...f, qty: e.target.value })} /></Field>
