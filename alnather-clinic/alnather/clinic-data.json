@@ -1,0 +1,33 @@
+{
+  "patients": [],
+  "exams": [],
+  "examiners": [
+    {
+      "id": 1,
+      "name": "أبو حسين",
+      "phone": "",
+      "role": "مدير العيادة",
+      "active": true
+    }
+  ],
+  "products": [],
+  "invoices": [],
+  "followups": [],
+  "users": [
+    {
+      "id": 1,
+      "name": "أبو حسين",
+      "username": "admin",
+      "role": "admin",
+      "active": true
+    }
+  ],
+  "settings": {
+    "clinicName": "عيادة العلي",
+    "phone1": "",
+    "phone2": "",
+    "footerText": "",
+    "primaryColor": "#2c1b3d",
+    "waTemplate": "مرحباً {name} 👋\nنذكركم بموعد المراجعة في عيادة {clinic} بتاريخ {date} الساعة {time}."
+  }
+}
